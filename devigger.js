@@ -8,19 +8,22 @@ const printer = (Final) => {
   console.log("Half Kelly: " + Final.Kelly_Full / 2);
   console.log("Quarter Kelly: " + Final.Kelly_Full / 4);
   console.log("Eighth Kelly: " + Final.Kelly_Full / 8);
-}
+};
 
 /**
  * --------------------------------------------------------
  * THIS IS AN EXAMPLE OF HOW TO USE AN ARRAY TO BUILD THE QUERIES
  */
 let list = ["LegOdds", "+3300", "FinalOdds", "+8500"];
-const exampleFunction = async (list) => {
-  const baseUrl = "http://api.crazyninjaodds.com/api/devigger/v1/sportsbook_devigger.aspx?api=open&";
-  const endUrl = "DevigMethod=4&Args=ev_p,fo_o,kelly,dm"
+export const exampleFunction = async (list) => {
+  const baseUrl =
+    "http://api.crazyninjaodds.com/api/devigger/v1/sportsbook_devigger.aspx?api=open&";
+  const endUrl = "DevigMethod=4&Args=ev_p,fo_o,kelly,dm";
   let queryString = baseUrl + generate(builder(...list)) + endUrl;
-  await fetch(queryString).then(res => res.json()).then(data => console.log(data));
-}
+  await fetch(queryString)
+    .then((res) => res.json())
+    .then((data) => printer(data.Final));
+};
 // --------------------------------------------------------
 
 //WORST-CASE DEVIG
@@ -47,3 +50,5 @@ function useRegex(input) {
 
 //devig("Draymond Green TD", "+3300", "+8500", "bet365");
 exampleFunction(list);
+
+export { list };
