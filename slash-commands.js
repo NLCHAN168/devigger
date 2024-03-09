@@ -1,4 +1,4 @@
-import { REST, Routes } from "discord.js";
+import { REST, Routes, SlashCommandBuilder } from "discord.js";
 import { config } from "dotenv";
 config();
 
@@ -11,10 +11,33 @@ const slashRegister = async () => {
   try {
     await rest.put(Routes.applicationGuildCommands(botID, serverID), {
       body: [
-        {
-          name: "devig",
-          description: "Devig using LegOdds, FinalOdds",
-        },
+        new SlashCommandBuilder()
+          .setName("devig")
+          .setDescription("Devig using LegOdds and FinalOdds")
+          .addStringOption((option) =>
+            option
+              .setName("market")
+              .setDescription("market name")
+              .setRequired(true)
+          )
+          .addStringOption((option) =>
+            option
+              .setName("legodds")
+              .setDescription("format: +100/-110, +200/-300")
+              .setRequired(true)
+          )
+          .addStringOption((option) =>
+            option
+              .setName("finalodds")
+              .setDescription("format: +2301")
+              .setRequired(true)
+          )
+          .addStringOption((option) =>
+            option
+              .setName("devigbook")
+              .setDescription("devigged to:")
+              .setRequired(false)
+          ),
       ],
     });
   } catch (error) {

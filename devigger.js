@@ -14,7 +14,7 @@ const printer = (Final) => {
  * --------------------------------------------------------
  * THIS IS AN EXAMPLE OF HOW TO USE AN ARRAY TO BUILD THE QUERIES
  */
-let list = ["LegOdds", "+3300", "FinalOdds", "+8500"];
+let list = [];
 export const exampleFunction = async (list) => {
   const baseUrl =
     "http://api.crazyninjaodds.com/api/devigger/v1/sportsbook_devigger.aspx?api=open&";
