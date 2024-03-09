@@ -49,6 +49,6 @@ function useRegex(input) {
 }
 
 //devig("Draymond Green TD", "+3300", "+8500", "bet365");
-exampleFunction(list);
+//exampleFunction(list);
 
 export { list };
