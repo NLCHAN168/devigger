@@ -29,17 +29,27 @@ client.on("interactionCreate", async (interaction) => {
       await fetch(queryString)
         .then((res) => res.json())
         .then((data) => {
+          console.log(data);
+          if (data.Final.FairValue_Odds > 0) {
+            data.Final.FairValue_Odds =
+              "+" + Math.round(data.Final.FairValue_Odds);
+          }
           embed = new EmbedBuilder()
             .setColor(0x0099ff)
             .setTitle(`${market}` + " " + `${finalodds}`)
             .addFields(
               {
-                name: "EV: " + data.Final.EV_Percentage * 100 + "%",
+                name: "\t",
+                value: "\t",
+              },
+              {
+                name:
+                  "EV: " + (data.Final.EV_Percentage * 100).toFixed(2) + "%",
                 value: " ",
                 inline: true,
               },
               {
-                name: "QK: " + data.Final.Kelly_Full / 4,
+                name: "QK: " + (data.Final.Kelly_Full / 4).toFixed(2),
                 value: " ",
                 inline: true,
               },
@@ -48,12 +58,12 @@ client.on("interactionCreate", async (interaction) => {
                 value: "\t",
               },
               {
-                name: "FV " + data.Final.FairValue_Odds,
+                name: "FV: " + data.Final.FairValue_Odds,
                 value: " ",
                 inline: true,
               },
               {
-                name: "WIN: " + data.Final.FairValue * 100 + "%",
+                name: "WIN: " + (data.Final.FairValue * 100).toFixed(2) + "%",
                 value: " ",
                 inline: true,
               },

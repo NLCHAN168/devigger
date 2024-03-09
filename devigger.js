@@ -47,8 +47,3 @@ function useRegex(input) {
   regex = regex.replace(/\,/g, "%2C");
   return regex;
 }
-
-//devig("Draymond Green TD", "+3300", "+8500", "bet365");
-//exampleFunction(list);
-
-export { list };
