@@ -22,59 +22,63 @@ client.on("interactionCreate", async (interaction) => {
       const finalodds = interaction.options.getString("finalodds");
       const devigbook = interaction.options.getString("devigbook");
       let list = ["LegOdds", legodds, "FinalOdds", finalodds];
-      const baseUrl =
-        "http://api.crazyninjaodds.com/api/devigger/v1/sportsbook_devigger.aspx?api=open&";
-      const endUrl = "DevigMethod=4&Args=ev_p,fo_o,kelly,dm";
-      let queryString = baseUrl + generate(builder(...list)) + endUrl;
-      await fetch(queryString)
-        .then((res) => res.json())
-        .then((data) => {
-          console.log(data);
-          if (data.Final.FairValue_Odds > 0) {
-            data.Final.FairValue_Odds =
-              "+" + Math.round(data.Final.FairValue_Odds);
-          }
-          embed = new EmbedBuilder()
-            .setColor(0x0099ff)
-            .setTitle(`${market}` + " " + `${finalodds}`)
-            .addFields(
-              {
-                name: "\t",
-                value: "\t",
-              },
-              {
-                name:
-                  "EV: " + (data.Final.EV_Percentage * 100).toFixed(2) + "%",
-                value: " ",
-                inline: true,
-              },
-              {
-                name: "QK: " + (data.Final.Kelly_Full / 4).toFixed(2),
-                value: " ",
-                inline: true,
-              },
-              {
-                name: "\t",
-                value: "\t",
-              },
-              {
-                name: "FV: " + data.Final.FairValue_Odds,
-                value: " ",
-                inline: true,
-              },
-              {
-                name: "WIN: " + (data.Final.FairValue * 100).toFixed(2) + "%",
-                value: " ",
-                inline: true,
-              },
-              {
-                name: "Devig book: " + `${devigbook}`,
-                value: " ",
-                inline: false,
-              }
-            );
-        });
-      interaction.editReply({ embeds: [embed] });
+      try {
+        const baseUrl =
+          "http://api.crazyninjaodds.com/api/devigger/v1/sportsbook_devigger.aspx?api=open&";
+        const endUrl = "DevigMethod=4&Args=ev_p,fo_o,kelly,dm";
+        let queryString = baseUrl + generate(builder(...list)) + endUrl;
+        await fetch(queryString)
+          .then((res) => res.json())
+          .then((data) => {
+            console.log(data);
+            if (data.Final.FairValue_Odds > 0) {
+              data.Final.FairValue_Odds =
+                "+" + Math.round(data.Final.FairValue_Odds);
+            }
+            embed = new EmbedBuilder()
+              .setColor(0x0099ff)
+              .setTitle(`${market}` + " " + `${finalodds}`)
+              .addFields(
+                {
+                  name: "\t",
+                  value: "\t",
+                },
+                {
+                  name:
+                    "EV: " + (data.Final.EV_Percentage * 100).toFixed(2) + "%",
+                  value: " ",
+                  inline: true,
+                },
+                {
+                  name: "QK: " + (data.Final.Kelly_Full / 4).toFixed(2),
+                  value: " ",
+                  inline: true,
+                },
+                {
+                  name: "\t",
+                  value: "\t",
+                },
+                {
+                  name: "FV: " + data.Final.FairValue_Odds,
+                  value: " ",
+                  inline: true,
+                },
+                {
+                  name: "WIN: " + (data.Final.FairValue * 100).toFixed(2) + "%",
+                  value: " ",
+                  inline: true,
+                },
+                {
+                  name: "Devig book: " + `${devigbook}`,
+                  value: " ",
+                  inline: false,
+                }
+              );
+          });
+        interaction.editReply({ embeds: [embed] });
+      } catch (error) {
+        interaction.editReply("An error occurred");
+      }
     }
   }
 });
