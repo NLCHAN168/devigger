@@ -31,7 +31,7 @@ client.on("interactionCreate", async (interaction) => {
           .then((res) => res.json())
           .then((data) => {
             console.log(data);
-
+            let datalength = Object.keys(data).length;
             if (data.Final.FairValue_Odds > 0) {
               data.Final.FairValue_Odds =
                 "+" + Math.round(data.Final.FairValue_Odds);
@@ -70,35 +70,43 @@ client.on("interactionCreate", async (interaction) => {
                   inline: true,
                 }
               );
-            for (let key in data) {
-              if (key.startsWith("Leg")) {
+            if (datalength > 2) {
+              for (let key in data) {
                 let fairvalueodds;
-                if (data[key].FairValue > 0.5) {
-                  fairvalueodds =
-                    (-2 + (1 - data[key].FairValue) / data[key].FairValue) *
-                    100;
-                } else {
-                  fairvalueodds =
-                    ((1 - data[key].FairValue) / data[key].FairValue) * 100;
-                }
-                embed.addFields(
-                  {
-                    name: key,
-                    value: " ",
-                    inline: false,
-                  },
-                  {
-                    name: "Odds: " + data[key].Odds,
-                    value: " ",
-                    inline: true,
-                  },
-                  {
-                    name: "Fair Value Odds: " + Math.round(fairvalueodds),
-                    value: " ",
-                    inline: true,
+                if (key.startsWith("Leg")) {
+                  if (data[key].FairValue > 0.5) {
+                    fairvalueodds =
+                      (-2 + (1 - data[key].FairValue) / data[key].FairValue) *
+                      100;
+                  } else {
+                    fairvalueodds =
+                      "+" +
+                      Math.round(
+                        ((1 - data[key].FairValue) / data[key].FairValue) * 100
+                      );
                   }
-                );
-                console.log("added field");
+                  if (data[key].Odds > 100) {
+                    data[key].Odds = "+" + data[key].Odds.trim();
+                  }
+                  embed.addFields(
+                    {
+                      name: key,
+                      value: " ",
+                      inline: false,
+                    },
+                    {
+                      name: "Odds: " + data[key].Odds,
+                      value: " ",
+                      inline: true,
+                    },
+                    {
+                      name: "Fair Value Odds: " + fairvalueodds,
+                      value: " ",
+                      inline: true,
+                    }
+                  );
+                  console.log("added field");
+                }
               }
             }
             embed.addFields({
@@ -106,8 +114,8 @@ client.on("interactionCreate", async (interaction) => {
               value: " ",
               inline: false,
             });
+            interaction.editReply({ embeds: [embed] });
           });
-        interaction.editReply({ embeds: [embed] });
       } catch (error) {
         console.log(error);
         interaction.editReply("An error occurred");
