@@ -72,6 +72,15 @@ client.on("interactionCreate", async (interaction) => {
               );
             for (let key in data) {
               if (key.startsWith("Leg")) {
+                let fairvalueodds;
+                if (data[key].FairValue > 0.5) {
+                  fairvalueodds =
+                    (-2 + (1 - data[key].FairValue) / data[key].FairValue) *
+                    100;
+                } else {
+                  fairvalueodds =
+                    ((1 - data[key].FairValue) / data[key].FairValue) * 100;
+                }
                 embed.addFields(
                   {
                     name: key,
@@ -79,13 +88,12 @@ client.on("interactionCreate", async (interaction) => {
                     inline: false,
                   },
                   {
-                    name: "Odds: " + key.Odds,
+                    name: "Odds: " + data[key].Odds,
                     value: " ",
                     inline: true,
                   },
                   {
-                    name:
-                      "Fair Value Odds: " + (1 - key.FairValue) / key.FairValue,
+                    name: "Fair Value Odds: " + Math.round(fairvalueodds),
                     value: " ",
                     inline: true,
                   }
