@@ -31,6 +31,7 @@ client.on("interactionCreate", async (interaction) => {
           .then((res) => res.json())
           .then((data) => {
             console.log(data);
+
             if (data.Final.FairValue_Odds > 0) {
               data.Final.FairValue_Odds =
                 "+" + Math.round(data.Final.FairValue_Odds);
@@ -67,16 +68,40 @@ client.on("interactionCreate", async (interaction) => {
                   name: "WIN: " + (data.Final.FairValue * 100).toFixed(2) + "%",
                   value: " ",
                   inline: true,
-                },
-                {
-                  name: "Devig book: " + `${devigbook}`,
-                  value: " ",
-                  inline: false,
                 }
               );
+            for (let key in data) {
+              if (key.startsWith("Leg")) {
+                embed.addFields(
+                  {
+                    name: key,
+                    value: " ",
+                    inline: false,
+                  },
+                  {
+                    name: "Odds: " + key.Odds,
+                    value: " ",
+                    inline: true,
+                  },
+                  {
+                    name:
+                      "Fair Value Odds: " + (1 - key.FairValue) / key.FairValue,
+                    value: " ",
+                    inline: true,
+                  }
+                );
+                console.log("added field");
+              }
+            }
+            embed.addFields({
+              name: "Devig book: " + `${devigbook}`,
+              value: " ",
+              inline: false,
+            });
           });
         interaction.editReply({ embeds: [embed] });
       } catch (error) {
+        console.log(error);
         interaction.editReply("An error occurred");
       }
     }
