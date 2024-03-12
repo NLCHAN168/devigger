@@ -51,6 +51,20 @@ client.on("interactionCreate", async (interaction) => {
                   inline: true,
                 },
                 {
+                  name: "FV: " + data.Final.FairValue_Odds,
+                  value: " ",
+                  inline: true,
+                },
+                {
+                  name: "\t",
+                  value: "\t",
+                },
+                {
+                  name: "HK: " + (data.Final.Kelly_Full / 2).toFixed(2),
+                  value: " ",
+                  inline: true,
+                },
+                {
                   name: "QK: " + (data.Final.Kelly_Full / 4).toFixed(2),
                   value: " ",
                   inline: true,
@@ -60,9 +74,18 @@ client.on("interactionCreate", async (interaction) => {
                   value: "\t",
                 },
                 {
-                  name: "FV: " + data.Final.FairValue_Odds,
+                  name: "SK: " + (data.Final.Kelly_Full / 6).toFixed(2),
                   value: " ",
                   inline: true,
+                },
+                {
+                  name: "EK: " + (data.Final.Kelly_Full / 8).toFixed(2),
+                  value: " ",
+                  inline: true,
+                },
+                {
+                  name: "\t",
+                  value: "\t",
                 },
                 {
                   name: "WIN: " + (data.Final.FairValue * 100).toFixed(2) + "%",
