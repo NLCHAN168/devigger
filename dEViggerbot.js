@@ -45,28 +45,18 @@ client.on("interactionCreate", async (interaction) => {
                   value: "\t",
                 },
                 {
-                  name:
-                    "EV: " + (data.Final.EV_Percentage * 100).toFixed(2) + "%",
-                  value: " ",
+                  name: " ",
+                  value:
+                    "```" +
+                    "EV: " +
+                    (data.Final.EV_Percentage * 100).toFixed(2) +
+                    "%" +
+                    "```",
                   inline: true,
                 },
                 {
-                  name: "FV: " + data.Final.FairValue_Odds,
-                  value: " ",
-                  inline: true,
-                },
-                {
-                  name: "\t",
-                  value: "\t",
-                },
-                {
-                  name: "HK: " + (data.Final.Kelly_Full / 2).toFixed(2),
-                  value: " ",
-                  inline: true,
-                },
-                {
-                  name: "QK: " + (data.Final.Kelly_Full / 4).toFixed(2),
-                  value: " ",
+                  name: " ",
+                  value: "```" + "FV: " + data.Final.FairValue_Odds + "```",
                   inline: true,
                 },
                 {
@@ -74,13 +64,21 @@ client.on("interactionCreate", async (interaction) => {
                   value: "\t",
                 },
                 {
-                  name: "SK: " + (data.Final.Kelly_Full / 6).toFixed(2),
-                  value: " ",
+                  name: " ",
+                  value:
+                    "```" +
+                    "HK: " +
+                    (data.Final.Kelly_Full / 2).toFixed(2) +
+                    "```",
                   inline: true,
                 },
                 {
-                  name: "EK: " + (data.Final.Kelly_Full / 8).toFixed(2),
-                  value: " ",
+                  name: " ",
+                  value:
+                    "```" +
+                    "QK: " +
+                    (data.Final.Kelly_Full / 4).toFixed(2) +
+                    "```",
                   inline: true,
                 },
                 {
@@ -88,8 +86,35 @@ client.on("interactionCreate", async (interaction) => {
                   value: "\t",
                 },
                 {
-                  name: "WIN: " + (data.Final.FairValue * 100).toFixed(2) + "%",
-                  value: " ",
+                  name: " ",
+                  value:
+                    "```" +
+                    "SK: " +
+                    (data.Final.Kelly_Full / 6).toFixed(2) +
+                    "```",
+                  inline: true,
+                },
+                {
+                  name: " ",
+                  value:
+                    "```" +
+                    "EK: " +
+                    (data.Final.Kelly_Full / 8).toFixed(2) +
+                    "```",
+                  inline: true,
+                },
+                {
+                  name: "\t",
+                  value: "\t",
+                },
+                {
+                  name: " ",
+                  value:
+                    "```" +
+                    "WIN: " +
+                    (data.Final.FairValue * 100).toFixed(2) +
+                    "%" +
+                    "```",
                   inline: true,
                 }
               );
