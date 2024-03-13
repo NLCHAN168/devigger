@@ -32,9 +32,9 @@ client.on("interactionCreate", async (interaction) => {
           .then((data) => {
             console.log(data);
             let datalength = Object.keys(data).length;
+            Math.round(data.Final.FairValue_Odds);
             if (data.Final.FairValue_Odds > 0) {
-              data.Final.FairValue_Odds =
-                "+" + Math.round(data.Final.FairValue_Odds);
+              data.Final.FairValue_Odds = "+" + data.Final.FairValue_Odds;
             }
             embed = new EmbedBuilder()
               .setColor(0x0099ff)
@@ -56,7 +56,11 @@ client.on("interactionCreate", async (interaction) => {
                 },
                 {
                   name: " ",
-                  value: "```" + "FV: " + data.Final.FairValue_Odds + "```",
+                  value:
+                    "```" +
+                    "FV: " +
+                    Math.round(data.Final.FairValue_Odds) +
+                    "```",
                   inline: true,
                 },
                 {
@@ -148,7 +152,7 @@ client.on("interactionCreate", async (interaction) => {
                       inline: true,
                     },
                     {
-                      name: "Fair Value Odds: " + fairvalueodds,
+                      name: "Fair Value Odds: " + Math.round(fairvalueodds),
                       value: " ",
                       inline: true,
                     }
