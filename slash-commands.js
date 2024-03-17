@@ -38,6 +38,18 @@ const slashRegister = async () => {
               .setDescription("devigged to:")
               .setRequired(false)
           ),
+        new SlashCommandBuilder()
+          .setName("golflist")
+          .setDescription("populate golf list (PGA)")
+          .addStringOption((option) =>
+            option.setName("tour").setDescription("tour name").setRequired(true)
+          )
+          .addStringOption((option) =>
+            option
+              .setName("market")
+              .setDescription("market name: win/top5/top10/top20")
+              .setRequired(true)
+          ),
       ],
     });
   } catch (error) {

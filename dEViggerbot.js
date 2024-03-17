@@ -1,6 +1,9 @@
 import { config } from "dotenv";
 import { Client, Embed, EmbedBuilder } from "discord.js";
 import { generate, builder } from "./querybuilder.js";
+import { outrightOdds, matchup3ballOdds, allPairings } from "./datagolf.js";
+import { win } from "./examplewin.js";
+import { threeball } from "./example3ball.js";
 
 config();
 const client = new Client({
@@ -11,6 +14,18 @@ client.login(TOKEN).catch((e) => console.error(e));
 client.on("ready", () => {
   console.log("The bot is logged in.");
 });
+
+//populate win,top5,top10,top20 arrays on startup
+
+//one array of golfers with IDs corresponding to each of the odds
+let pgawin = [];
+let pgatop5 = [];
+let pgatop10 = [];
+let pgatop20 = [];
+let winev = [];
+let top5ev = [];
+let top10ev = [];
+let top20ev = [];
 
 client.on("interactionCreate", async (interaction) => {
   if (interaction.isCommand()) {
@@ -170,6 +185,52 @@ client.on("interactionCreate", async (interaction) => {
           });
       } catch (error) {
         console.log(error);
+        interaction.editReply("An error occurred");
+      }
+    }
+  }
+});
+
+//populate win/top5/top10/top20 array with slash command
+client.on("interactionCreate", async (interaction) => {
+  if (interaction.isCommand()) {
+    if (interaction.commandName === "golflist") {
+      // await interaction.deferReply();
+      let embed;
+      const tour = interaction.options.getString("tour");
+      const market = interaction.options.getString("market");
+      let list = ["tour", tour, "market", market];
+      try {
+        // const baseUrl = "https://feeds.datagolf.com/betting-tools/outrights?";
+        // const endUrl = `&odds_format=american&file_format=json&key=${process.env.DG_TOKEN}`;
+        // const queryString = baseUrl + generate(builder(...list)) + endUrl;
+        // await fetch(queryString)
+        //   .then((res) => {
+        //     return res.json();
+        //   })
+        //   .then((data) => {
+        if (market === "win") {
+          //push data into pgawin array
+          //devig, push plays above ev threshold to winev array
+          //output array to discord
+          for (let key in win) {
+            if (Array.isArray(win[key])) {
+              for (let i = 0; i < win[key].length; i++) {
+                pgawin.push(win[key][i]);
+              }
+            } else pgawin.push(win[key]);
+          }
+          console.log(pgawin);
+        }
+        //compare()? pgawin(oldarray) to new data - devigS
+        for (let key in pgawin) {
+        }
+        //output to ev array here
+
+        // interaction.editReply(embed);
+        // });
+      } catch (e) {
+        console.log(e);
         interaction.editReply("An error occurred");
       }
     }
