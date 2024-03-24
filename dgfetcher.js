@@ -32,7 +32,7 @@ const pgaEv = () => {
       pgawin.push({ [key]: arr });
     } else pgawin.push({ [key]: win[key] });
   }
-  console.log(pgawin);
+  // console.log(pgawin);
   //devig all objects inside pgawin.odds
   //compare()? pgawin(oldarray) to new data - devigS
   for (let obj of pgawin[5].odds) {
@@ -45,10 +45,11 @@ const pgaEv = () => {
         obj.fanduel,
       ];
       let queryString = baseUrl + generate(builder(...list)) + endUrl;
-      return fetch(queryString)
+      fetch(queryString)
         .then((res) => res.json())
         .then((data) => {
-          console.log(data);
+          obj.devig = data;
+          console.log(obj);
         });
     }
   }
