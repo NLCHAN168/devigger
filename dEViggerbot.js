@@ -2,8 +2,8 @@ import { config } from "dotenv";
 import { Client, Embed, EmbedBuilder } from "discord.js";
 import { generate, builder } from "./querybuilder.js";
 import { outrightOdds, matchup3ballOdds, allPairings } from "./datagolf.js";
-import { win } from "./examplewin.js";
 import { threeball } from "./example3ball.js";
+import { pgaEv } from "./dgfetcher.js";
 
 config();
 const client = new Client({
@@ -16,16 +16,6 @@ client.on("ready", () => {
 });
 
 //populate win,top5,top10,top20 arrays on startup
-
-//one array of golfers with IDs corresponding to each of the odds
-let pgawin = [];
-let pgatop5 = [];
-let pgatop10 = [];
-let pgatop20 = [];
-let winev = [];
-let top5ev = [];
-let top10ev = [];
-let top20ev = [];
 
 client.on("interactionCreate", async (interaction) => {
   if (interaction.isCommand()) {
@@ -210,26 +200,9 @@ client.on("interactionCreate", async (interaction) => {
         //   })
         //   .then((data) => {
         if (market === "win") {
-          //push key:value pairs into pgawin array
-          //devig, push plays above ev threshold to winev array
-          //output array to discord
-          for (let key in win) {
-            if (Array.isArray(win[key])) {
-              let arr = [];
-              for (let i = 0; i < win[key].length; i++) {
-                arr.push(win[key][i]);
-              }
-              pgawin.push({ [key]: arr });
-            } else pgawin.push({ [key]: win[key] });
-          }
-          //push key:value pairs to array
-          console.log(pgawin);
+          //output to ev array here
+          pgaEv();
         }
-        //compare()? pgawin(oldarray) to new data - devigS
-        for (let key in pgawin) {
-        }
-        //output to ev array here
-
         // interaction.editReply(embed);
         // });
       } catch (e) {
