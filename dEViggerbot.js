@@ -210,16 +210,19 @@ client.on("interactionCreate", async (interaction) => {
         //   })
         //   .then((data) => {
         if (market === "win") {
-          //push data into pgawin array
+          //push key:value pairs into pgawin array
           //devig, push plays above ev threshold to winev array
           //output array to discord
           for (let key in win) {
             if (Array.isArray(win[key])) {
+              let arr = [];
               for (let i = 0; i < win[key].length; i++) {
-                pgawin.push(win[key][i]);
+                arr.push(win[key][i]);
               }
-            } else pgawin.push(win[key]);
+              pgawin.push({ [key]: arr });
+            } else pgawin.push({ [key]: win[key] });
           }
+          //push key:value pairs to array
           console.log(pgawin);
         }
         //compare()? pgawin(oldarray) to new data - devigS
