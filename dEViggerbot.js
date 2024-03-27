@@ -3,7 +3,17 @@ import { Client, Embed, EmbedBuilder } from "discord.js";
 import { generate, builder } from "./querybuilder.js";
 import { outrightOdds, matchup3ballOdds, allPairings } from "./datagolf.js";
 import { threeball } from "./example3ball.js";
-import { pgaEv } from "./dgfetcher.js";
+import {
+  pgaEv,
+  pgawin,
+  pgatop5,
+  pgatop10,
+  pgatop20,
+  winev,
+  top5ev,
+  top10ev,
+  top20ev,
+} from "./dgfetcher.js";
 
 config();
 const client = new Client({
@@ -201,7 +211,16 @@ client.on("interactionCreate", async (interaction) => {
         //   .then((data) => {
         if (market === "win") {
           //output to ev array here
-          pgaEv();
+          pgaEv("win", pgawin, winev);
+        }
+        if (market === "top5") {
+          pgaEv("top5", pgatop5, top5ev);
+        }
+        if (market === "top10") {
+          pgaEv("top10", pgatop10, top10ev);
+        }
+        if (market === "top20") {
+          pgaEv("top20", pgatop20, top20ev);
         }
         // interaction.editReply(embed);
         // });

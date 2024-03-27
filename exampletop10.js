@@ -25,7 +25,8 @@ let top10 = {
       datagolf: { baseline: null, baseline_history_fit: "-4895" },
       dg_id: 19895,
       draftkings: "-6000",
-      fanduel: "-7000",
+      // fanduel: "-7000",
+      fanduel: "+120",
       player_name: "Schauffele, Xander",
       pointsbet: "-6579",
       skybet: "-10000",
@@ -792,3 +793,5 @@ let top10 = {
     },
   ],
 };
+
+export { top10 };
