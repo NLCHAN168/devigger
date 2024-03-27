@@ -2,8 +2,18 @@ import { config } from "dotenv";
 import { Client, Embed, EmbedBuilder } from "discord.js";
 import { generate, builder } from "./querybuilder.js";
 import { outrightOdds, matchup3ballOdds, allPairings } from "./datagolf.js";
-import { win } from "./examplewin.js";
 import { threeball } from "./example3ball.js";
+import {
+  pgaEv,
+  pgawin,
+  pgatop5,
+  pgatop10,
+  pgatop20,
+  winev,
+  top5ev,
+  top10ev,
+  top20ev,
+} from "./dgfetcher.js";
 
 config();
 const client = new Client({
@@ -16,16 +26,6 @@ client.on("ready", () => {
 });
 
 //populate win,top5,top10,top20 arrays on startup
-
-//one array of golfers with IDs corresponding to each of the odds
-let pgawin = [];
-let pgatop5 = [];
-let pgatop10 = [];
-let pgatop20 = [];
-let winev = [];
-let top5ev = [];
-let top10ev = [];
-let top20ev = [];
 
 client.on("interactionCreate", async (interaction) => {
   if (interaction.isCommand()) {
@@ -210,23 +210,18 @@ client.on("interactionCreate", async (interaction) => {
         //   })
         //   .then((data) => {
         if (market === "win") {
-          //push data into pgawin array
-          //devig, push plays above ev threshold to winev array
-          //output array to discord
-          for (let key in win) {
-            if (Array.isArray(win[key])) {
-              for (let i = 0; i < win[key].length; i++) {
-                pgawin.push(win[key][i]);
-              }
-            } else pgawin.push(win[key]);
-          }
-          console.log(pgawin);
+          //output to ev array here
+          pgaEv("win", pgawin, winev);
         }
-        //compare()? pgawin(oldarray) to new data - devigS
-        for (let key in pgawin) {
+        if (market === "top5") {
+          pgaEv("top5", pgatop5, top5ev);
         }
-        //output to ev array here
-
+        if (market === "top10") {
+          pgaEv("top10", pgatop10, top10ev);
+        }
+        if (market === "top20") {
+          pgaEv("top20", pgatop20, top20ev);
+        }
         // interaction.editReply(embed);
         // });
       } catch (e) {
