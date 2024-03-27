@@ -93,6 +93,7 @@ const pgaEv = (market, golfarray, evarray) => {
           //assess EV, if above threshold, push to evarray
           if (obj.devig.Final.EV_Percentage > 0.1) {
             evarray.push(obj);
+            obj.pinged = true;
             // console.log(evarray);
           }
         });
