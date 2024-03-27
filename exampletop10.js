@@ -1,3 +1,5 @@
+/** @typedef {import('./d.ts').DatagolfResponse} TopX
+/** @type {TopX} */
 let top10 = {
   books_offering: [
     "bet365",
