@@ -91,10 +91,10 @@ const pgaEv = (market, golfarray, evarray) => {
         .then((data) => {
           obj.devig = data;
           //assess EV, if above threshold, push to evarray
-          if (obj.devig.Final.EV_Percentage > 0.1) {
+          if (obj.devig.Final.EV_Percentage > 0.1 && obj.pinged != true) {
             evarray.push(obj);
             obj.pinged = true;
-            // console.log(evarray);
+            console.log(evarray);
           }
         });
     }
