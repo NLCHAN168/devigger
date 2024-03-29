@@ -17,3 +17,5 @@ export interface DatagolfResponse {
 	notes: string;
 	odds: OddsEntry[];
 }
+
+//#TODO: create more types

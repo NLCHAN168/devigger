@@ -3,6 +3,7 @@ import { Client, Embed, EmbedBuilder } from "discord.js";
 import { generate, builder } from "./querybuilder.js";
 import { outrightOdds, matchup3ballOdds, allPairings } from "./datagolf.js";
 import { threeball } from "./example3ball.js";
+//TODO: Check if importing arrays is necessary or redundant
 import {
   pgaEv,
   pgawin,
@@ -195,11 +196,12 @@ client.on("interactionCreate", async (interaction) => {
 client.on("interactionCreate", async (interaction) => {
   if (interaction.isCommand()) {
     if (interaction.commandName === "golflist") {
-      // await interaction.deferReply();
+      await interaction.deferReply();
       let embed;
       const tour = interaction.options.getString("tour");
       const market = interaction.options.getString("market");
       let list = ["tour", tour, "market", market];
+      //TODO: refactor code to populate win/top5/top10/top20 on startup
       try {
         // const baseUrl = "https://feeds.datagolf.com/betting-tools/outrights?";
         // const endUrl = `&odds_format=american&file_format=json&key=${process.env.DG_TOKEN}`;
@@ -209,9 +211,22 @@ client.on("interactionCreate", async (interaction) => {
         //     return res.json();
         //   })
         //   .then((data) => {
+        //TODO: Add embed reply for each command
         if (market === "win") {
           //output to ev array here
+          embed = new EmbedBuilder().setColor(0x0099ff).setTitle(" ");
+          console.log("pgawin before pgaEV call: " + pgawin);
+          console.log("winev before pgaEV call: " + winev);
           pgaEv("win", pgawin, winev);
+          //TODO: Fix loop (key into obj.odds correctly)
+          for (let obj of winev) {
+            embed.addFields({
+              name:
+                pgawin.event_name + " " + obj.player_name + " " + pgawin.market,
+              value: " ",
+            });
+          }
+          interaction.editReply({ embeds: [embed] });
         }
         if (market === "top5") {
           pgaEv("top5", pgatop5, top5ev);

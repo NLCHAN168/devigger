@@ -91,9 +91,11 @@ const pgaEv = (market, golfarray, evarray) => {
         .then((data) => {
           obj.devig = data;
           //assess EV, if above threshold, push to evarray
+          // TODO: Add edge case for pings that become higher EV
           if (obj.devig.Final.EV_Percentage > 0.1 && obj.pinged != true) {
             evarray.push(obj);
             obj.pinged = true;
+            console.log("EV: " + obj.devig.Final.EV_Percentage);
             console.log(evarray);
           }
         });
