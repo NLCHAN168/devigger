@@ -4,6 +4,7 @@ import { generate, builder } from "./querybuilder.js";
 import { outrightOdds, matchup3ballOdds, allPairings } from "./datagolf.js";
 import { threeball } from "./example3ball.js";
 //TODO: Check if importing arrays is necessary or redundant
+import { win } from "./examplewin.js";
 import {
   pgaEv,
   pgawin,
@@ -215,16 +216,24 @@ client.on("interactionCreate", async (interaction) => {
         if (market === "win") {
           //output to ev array here
           embed = new EmbedBuilder().setColor(0x0099ff).setTitle(" ");
-          console.log("pgawin before pgaEV call: " + pgawin);
-          console.log("winev before pgaEV call: " + winev);
-          pgaEv("win", pgawin, winev);
+          // console.log("pgawin before pgaEV call: " + pgawin);
+          // console.log("winev before pgaEV call: " + winev);
+          await pgaEv("win", pgawin, winev);
+          // console.log("pgawin after pgaEV call: " + pgawin);
+          // console.log("winev after pgaEV call: " + winev);
           //TODO: Fix loop (key into obj.odds correctly)
+          // let poo = pgawin;
           for (let obj of winev) {
-            embed.addFields({
-              name:
-                pgawin.event_name + " " + obj.player_name + " " + pgawin.market,
-              value: " ",
-            });
+            embed.addFields(
+              {
+                name: win.event_name + " " + obj.player_name + " " + win.market + win.odds.Final.,
+                value: " ",
+              },
+              {
+                name: winev.odds,
+                value: " ",
+              }
+            );
           }
           interaction.editReply({ embeds: [embed] });
         }

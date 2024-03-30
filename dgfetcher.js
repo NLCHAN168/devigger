@@ -1,3 +1,5 @@
+//@ts-check
+
 import { win } from "./examplewin.js";
 import { top5 } from "./exampletop5.js";
 import { top10 } from "./exampletop10.js";
@@ -8,24 +10,28 @@ import { config } from "dotenv";
 config();
 
 //one array of golfers with IDs corresponding to each of the odds
-let pgawin = [];
-let pgatop5 = [];
-let pgatop10 = [];
-let pgatop20 = [];
-let winev = [];
-let top5ev = [];
-let top10ev = [];
-let top20ev = [];
+//FIXME: redefined as object instead of array
+/** @typedef {import('./d.ts').DatagolfResponse} DatagolfResponse
+/** @type {DatagolfResponse} */
+let pgawin = {};
+let pgatop5 = {};
+let pgatop10 = {};
+let pgatop20 = {};
+let winev = {};
+let top5ev = {};
+let top10ev = {};
+let top20ev = {};
 
 //push key:value pairs into pgawin array
 //devig, push plays above ev threshold to winev array
 //output array to discord
-const pgaEv = (market, golfarray, evarray) => {
+async function pgaEv(market, golfarray, evarray) {
   let baseUrl =
     "http://api.crazyninjaodds.com/api/devigger/v1/sportsbook_devigger.aspx?api=open&";
   let endUrl = `DevigMethod=4&Args=ev_p,fo_o,kelly,dm`;
   //push key:value pairs to array
   //eventually will need to check if key : value pair exists
+  //TODO: double check if event_name key is pushed properly in order to avoid import call to deviggerbot.js
   if (market === "win") {
     for (let key in win) {
       if (Array.isArray(win[key])) {
@@ -86,7 +92,7 @@ const pgaEv = (market, golfarray, evarray) => {
         obj.fanduel,
       ];
       let queryString = baseUrl + generate(builder(...list)) + endUrl;
-      fetch(queryString)
+      await fetch(queryString)
         .then((res) => res.json())
         .then((data) => {
           obj.devig = data;
@@ -97,11 +103,12 @@ const pgaEv = (market, golfarray, evarray) => {
             obj.pinged = true;
             console.log("EV: " + obj.devig.Final.EV_Percentage);
             console.log(evarray);
+            // return evarray;
           }
         });
     }
   }
-};
+}
 export { pgaEv };
 
 //refactor json response local array?  json clone?

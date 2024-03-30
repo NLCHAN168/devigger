@@ -1,4 +1,4 @@
-let array = [ 
+/*let array = [ 
 	{
 		"The pl": [
 		 { bet365: "+300", ..., pinged: false},
@@ -28,4 +28,4 @@ function compareOldAndNew(old, new) {
 	}
 	console.log("End");
 }
-}
+}*/
