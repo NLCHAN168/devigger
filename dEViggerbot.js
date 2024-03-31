@@ -226,7 +226,13 @@ client.on("interactionCreate", async (interaction) => {
           for (let obj of winev) {
             embed.addFields(
               {
-                name: win.event_name + " " + obj.player_name + " " + win.market + win.odds.Final.,
+                name:
+                  win.event_name +
+                  " " +
+                  obj.player_name +
+                  " " +
+                  win.market +
+                  win.odds.fanduel,
                 value: " ",
               },
               {

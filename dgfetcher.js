@@ -35,54 +35,56 @@ async function pgaEv(market, golfarray, evarray) {
   if (market === "win") {
     for (let key in win) {
       if (Array.isArray(win[key])) {
-        let arr = [];
+        let obj = {};
         for (let i = 0; i < win[key].length; i++) {
-          arr.push(win[key][i]);
+          obj[`${key}`] = win[key][i];
         }
-        golfarray.push({ [key]: arr });
-      } else golfarray.push({ [key]: win[key] });
+        golfarray[`${key}`] = obj;
+      } else golfarray[`${key}`] = win[key];
     }
   }
 
   if (market === "top5") {
     for (let key in top5) {
       if (Array.isArray(top5[key])) {
-        let arr = [];
+        let obj = {};
         for (let i = 0; i < top5[key].length; i++) {
-          arr.push(top5[key][i]);
+          obj[`${key}`] = top5[key][i];
         }
-        golfarray.push({ [key]: arr });
-      } else golfarray.push({ [key]: top5[key] });
+        golfarray[`${key}`] = obj;
+      } else golfarray[`${key}`] = top5[key];
     }
   }
 
   if (market === "top10") {
     for (let key in top10) {
       if (Array.isArray(top10[key])) {
-        let arr = [];
+        let obj = {};
         for (let i = 0; i < top10[key].length; i++) {
-          arr.push(top10[key][i]);
+          obj[`${key}`] = top10[key][i];
         }
-        golfarray.push({ [key]: arr });
-      } else golfarray.push({ [key]: top10[key] });
+        golfarray[`${key}`] = obj;
+      } else golfarray[`${key}`] = top10[key];
     }
   }
 
   if (market === "top20") {
     for (let key in top20) {
       if (Array.isArray(top20[key])) {
-        let arr = [];
+        let obj = {};
         for (let i = 0; i < top20[key].length; i++) {
-          arr.push(top20[key][i]);
+          obj[`${key}`] = top20[key][i];
         }
-        golfarray.push({ [key]: arr });
-      } else golfarray.push({ [key]: top20[key] });
+        golfarray[`${key}`] = obj;
+      } else golfarray[`${key}`] = top20[key];
     }
   }
   // console.log(pgawin);
   //devig all objects inside pgawin.odds
   //compare()? pgawin(oldarray) to new data - devigS
-  for (let obj of golfarray[5].odds) {
+  // for (let obj of golfarray[5].odds) {
+  console.log(golfarray);
+  for (let obj of golfarray[5]) {
     //calls devig for golfer if odds exist for DG AND FD
     if (obj.fanduel != null && obj.datagolf.baseline_history_fit != null) {
       let list = [
