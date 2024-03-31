@@ -12,6 +12,7 @@ config();
 //one array of golfers with IDs corresponding to each of the odds
 /** @typedef {import('./d.ts').DatagolfResponse} DatagolfResponse
 /** @type {DatagolfResponse} */
+//one array for all golf tournaments, organized by outright placement
 let pgawin = {};
 let pgatop5 = {};
 let pgatop10 = {};
@@ -97,7 +98,6 @@ async function pgaEv(market, golfarray, evarray) {
             obj.pinged = true;
             console.log("EV: " + obj.devig.Final.EV_Percentage);
             console.log(evarray);
-            // return evarray;
           }
         });
     }
@@ -106,7 +106,6 @@ async function pgaEv(market, golfarray, evarray) {
 export { pgaEv };
 
 //refactor json response local array?  json clone?
-//pgawin[5].odds is AIDS
 
 export {
   win,
