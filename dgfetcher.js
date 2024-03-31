@@ -18,10 +18,10 @@ let pgatop5 = {};
 let pgatop10 = {};
 let pgatop20 = {};
 //FIXME: ev objs or arrays?
-let winev = {};
-let top5ev = {};
-let top10ev = {};
-let top20ev = {};
+let winev = [];
+let top5ev = [];
+let top10ev = [];
+let top20ev = [];
 
 //push key:value pairs into pgawin array
 //devig, push plays above ev threshold to winev array
@@ -76,10 +76,8 @@ async function pgaEv(market, golfarray, evarray) {
       } else golfarray[`${key}`] = top20[key];
     }
   }
-  // console.log(pgawin);
   //devig all objects inside pgawin.odds
   //compare()? pgawin(oldarray) to new data - devigS
-  // for (let obj of golfarray[5].odds) {
   console.log(golfarray);
   for (let obj of golfarray.odds) {
     //calls devig for golfer if odds exist for DG AND FD

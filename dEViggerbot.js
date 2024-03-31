@@ -216,28 +216,99 @@ client.on("interactionCreate", async (interaction) => {
         if (market === "win") {
           //output to ev array here
           embed = new EmbedBuilder().setColor(0x0099ff).setTitle(" ");
-          // console.log("pgawin before pgaEV call: " + pgawin);
-          // console.log("winev before pgaEV call: " + winev);
           await pgaEv("win", pgawin, winev);
-          // console.log("pgawin after pgaEV call: " + pgawin);
-          // console.log("winev after pgaEV call: " + winev);
+
           //TODO: Fix loop (key into obj.odds correctly)
           // let poo = pgawin;
-          for (let obj of winev) {
+          for (let i = 0; i < winev.length; i++) {
+            //if fair value odds is positive, add "+"
+            if (winev[i].devig.Final.FairValue_Odds > 0) {
+              winev[i].devig.Final.FairValue_Odds =
+                "+" + winev[i].devig.Final.FairValue_Odds;
+            }
             embed.addFields(
               {
-                name:
-                  win.event_name +
-                  " " +
-                  obj.player_name +
+                name: win.event_name,
+                value:
+                  winev[i].player_name +
                   " " +
                   win.market +
-                  win.odds.fanduel,
-                value: " ",
+                  " " +
+                  winev[i].fanduel,
               },
               {
-                name: winev.odds,
+                name:
+                  "```" +
+                  "EV: " +
+                  winev[i].devig.Final.EV_Percentage.toFixed(2) * 100 +
+                  "%" +
+                  "```",
                 value: " ",
+                inline: true,
+              },
+              {
+                name:
+                  "```" + "FV: " + winev[i].devig.Final.FairValue_Odds + "```",
+                value: " ",
+                inline: true,
+              },
+              {
+                name: "\t",
+                value: "\t",
+              },
+              {
+                name:
+                  "```" +
+                  "HK : " +
+                  (winev[i].devig.Final.Kelly_Full / 2).toFixed(2) +
+                  "```",
+                value: " ",
+                inline: true,
+              },
+              {
+                name:
+                  "```" +
+                  "QK : " +
+                  (winev[i].devig.Final.Kelly_Full / 4).toFixed(2) +
+                  "```",
+                value: " ",
+                inline: true,
+              },
+              {
+                name: "\t",
+                value: "\t",
+              },
+              {
+                name:
+                  "```" +
+                  "SK : " +
+                  (winev[i].devig.Final.Kelly_Full / 6).toFixed(2) +
+                  "```",
+                value: " ",
+                inline: true,
+              },
+              {
+                name:
+                  "```" +
+                  "EK : " +
+                  (winev[i].devig.Final.Kelly_Full / 8).toFixed(2) +
+                  "```",
+                value: " ",
+                inline: true,
+              },
+              {
+                name: "\t",
+                value: "\t",
+              },
+              {
+                name:
+                  "```" +
+                  "WIN: " +
+                  (winev[i].devig.Final.FairValue * 100).toFixed(2) +
+                  "%" +
+                  "```",
+                value: " ",
+                inline: true,
               }
             );
           }

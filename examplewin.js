@@ -35,7 +35,6 @@ let win = {
       dg_id: 19895,
       draftkings: "+130",
       fanduel: "+130",
-      // fanduel: "+400",
       player_name: "Schauffele, Xander",
       pointsbet: "+130",
       skybet: "+110",
