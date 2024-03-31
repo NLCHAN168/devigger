@@ -4,6 +4,7 @@ import { generate, builder } from "./querybuilder.js";
 import { outrightOdds, matchup3ballOdds, allPairings } from "./datagolf.js";
 import { threeball } from "./example3ball.js";
 //TODO: Check if importing arrays is necessary or redundant
+//TODO: Refactor to use live data
 import { win } from "./examplewin.js";
 import {
   pgaEv,
@@ -217,9 +218,6 @@ client.on("interactionCreate", async (interaction) => {
           //output to ev array here
           embed = new EmbedBuilder().setColor(0x0099ff).setTitle(" ");
           await pgaEv("win", pgawin, winev);
-
-          //TODO: Fix loop (key into obj.odds correctly)
-          // let poo = pgawin;
           for (let i = 0; i < winev.length; i++) {
             //if fair value odds is positive, add "+"
             if (winev[i].devig.Final.FairValue_Odds > 0) {

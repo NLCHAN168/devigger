@@ -10,14 +10,12 @@ import { config } from "dotenv";
 config();
 
 //one array of golfers with IDs corresponding to each of the odds
-//FIXME: redefined as object instead of array
 /** @typedef {import('./d.ts').DatagolfResponse} DatagolfResponse
 /** @type {DatagolfResponse} */
 let pgawin = {};
 let pgatop5 = {};
 let pgatop10 = {};
 let pgatop20 = {};
-//FIXME: ev objs or arrays?
 let winev = [];
 let top5ev = [];
 let top10ev = [];
@@ -32,7 +30,6 @@ async function pgaEv(market, golfarray, evarray) {
   let endUrl = `DevigMethod=4&Args=ev_p,fo_o,kelly,dm`;
   //push key:value pairs to array
   //eventually will need to check if key : value pair exists
-  //TODO: double check if event_name key is pushed properly in order to avoid import call to deviggerbot.js
   if (market === "win") {
     for (let key in win) {
       if (Array.isArray(win[key])) {
