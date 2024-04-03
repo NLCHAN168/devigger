@@ -18,6 +18,7 @@ export interface DatagolfResponse {
 	odds?: OddsEntry[];
 }
 
+
 interface Leg {
 	Odds: string,
 	MarketJuice: number,
@@ -38,7 +39,3 @@ export interface DevigResponse {
 			[key: `Leg#${number}`]:  Leg;
 			Final: Final
 		  }
-	
-
-
-//#TODO: create more types

@@ -204,6 +204,7 @@ client.on("interactionCreate", async (interaction) => {
       const market = interaction.options.getString("market");
       let list = ["tour", tour, "market", market];
       //TODO: refactor code to populate win/top5/top10/top20 on startup
+      //TODO: add DK devig functionality on top of FD
       try {
         // const baseUrl = "https://feeds.datagolf.com/betting-tools/outrights?";
         // const endUrl = `&odds_format=american&file_format=json&key=${process.env.DG_TOKEN}`;
@@ -214,10 +215,12 @@ client.on("interactionCreate", async (interaction) => {
         //   })
         //   .then((data) => {
         //TODO: Add embed reply for each command
+        //TODO: refactor function to evarray = winev || top5ev etc depending on slash commmand fields
         if (market === "win") {
           //output to ev array here
           embed = new EmbedBuilder().setColor(0x0099ff).setTitle(" ");
-          await pgaEv("win", pgawin, winev);
+          //FIXME: dont need to pass arrays directly to func, only pass strings and have func handle everything
+          await pgaEv("win", market);
           for (let i = 0; i < winev.length; i++) {
             //if fair value odds is positive, add "+"
             if (winev[i].devig.Final.FairValue_Odds > 0) {
@@ -313,8 +316,107 @@ client.on("interactionCreate", async (interaction) => {
           interaction.editReply({ embeds: [embed] });
         }
         if (market === "top5") {
-          pgaEv("top5", pgatop5, top5ev);
+          embed = new EmbedBuilder().setColor(0x0099ff).setTitle(" ");
+          await pgaEv("top5", pgatop5, top5ev);
+          console.log("TOP5EV: " + top5ev);
+          for (let i = 0; i < top5ev.length; i++) {
+            //if fair value odds is positive, add "+"
+            if (top5ev[i].devig.Final.FairValue_Odds > 0) {
+              top5ev[i].devig.Final.FairValue_Odds =
+                "+" + top5ev[i].devig.Final.FairValue_Odds;
+            }
+            embed.addFields(
+              {
+                name: pgatop5.event_name,
+                value:
+                  top5ev[i].player_name +
+                  " " +
+                  pgatop5.market +
+                  " " +
+                  top5ev[i].fanduel,
+              },
+              {
+                name:
+                  "```" +
+                  "EV: " +
+                  top5ev[i].devig.Final.EV_Percentage.toFixed(2) * 100 +
+                  "%" +
+                  "```",
+                value: " ",
+                inline: true,
+              },
+              {
+                name:
+                  "```" + "FV: " + top5ev[i].devig.Final.FairValue_Odds + "```",
+                value: " ",
+                inline: true,
+              },
+              {
+                name: "\t",
+                value: "\t",
+              },
+              {
+                name:
+                  "```" +
+                  "HK : " +
+                  (top5ev[i].devig.Final.Kelly_Full / 2).toFixed(2) +
+                  "```",
+                value: " ",
+                inline: true,
+              },
+              {
+                name:
+                  "```" +
+                  "QK : " +
+                  (top5ev[i].devig.Final.Kelly_Full / 4).toFixed(2) +
+                  "```",
+                value: " ",
+                inline: true,
+              },
+              {
+                name: "\t",
+                value: "\t",
+              },
+              {
+                name:
+                  "```" +
+                  "SK : " +
+                  (top5ev[i].devig.Final.Kelly_Full / 6).toFixed(2) +
+                  "```",
+                value: " ",
+                inline: true,
+              },
+              {
+                name:
+                  "```" +
+                  "EK : " +
+                  (top5ev[i].devig.Final.Kelly_Full / 8).toFixed(2) +
+                  "```",
+                value: " ",
+                inline: true,
+              },
+              {
+                name: "\t",
+                value: "\t",
+              },
+              {
+                name:
+                  "```" +
+                  "WIN: " +
+                  (top5ev[i].devig.Final.FairValue * 100).toFixed(2) +
+                  "%" +
+                  "```",
+                value: " ",
+                inline: true,
+              }
+            );
+            interaction.editReply({ embeds: [embed] });
+          }
+          if (top5ev.length === 0) {
+            interaction.editReply("NO EV");
+          }
         }
+
         if (market === "top10") {
           pgaEv("top10", pgatop10, top10ev);
         }

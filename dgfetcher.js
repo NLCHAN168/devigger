@@ -76,7 +76,7 @@ async function pgaEv(market, golfarray, evarray) {
   }
   //devig all objects inside pgawin.odds
   //compare()? pgawin(oldarray) to new data - devigS
-  console.log(golfarray);
+  // console.log(golfarray);
   for (let obj of golfarray.odds) {
     //calls devig for golfer if odds exist for DG AND FD
     if (obj.fanduel != null && obj.datagolf.baseline_history_fit != null) {
