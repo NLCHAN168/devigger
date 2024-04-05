@@ -18,7 +18,6 @@ export interface DatagolfResponse {
 	odds?: OddsEntry[];
 }
 
-
 interface Leg {
 	Odds: string,
 	MarketJuice: number,

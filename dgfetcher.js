@@ -22,13 +22,58 @@ let top5ev = [];
 let top10ev = [];
 let top20ev = [];
 
+let baseUrl =
+  "http://api.crazyninjaodds.com/api/devigger/v1/sportsbook_devigger.aspx?api=open&";
+let endUrl = `DevigMethod=4&Args=ev_p,fo_o,kelly,dm`;
+
 //push key:value pairs into pgawin array
 //devig, push plays above ev threshold to winev array
 //output array to discord
-async function pgaEv(market, golfarray, evarray) {
-  let baseUrl =
-    "http://api.crazyninjaodds.com/api/devigger/v1/sportsbook_devigger.aspx?api=open&";
-  let endUrl = `DevigMethod=4&Args=ev_p,fo_o,kelly,dm`;
+//FIXME: function keeps pushing same golfers to evarray after each slash command call
+//add check statement to only devig if anything changed
+//FIXME: Seperate pgaEv into different functions
+async function pgaEv(tour, market) {
+  let golfarray = pgawin;
+  let evarray = winev;
+  if (tour.toLowerCase() === "pga") {
+    if (market.toLowerCase() === "win") {
+      golfarray = pgawin;
+      evarray = winev;
+    }
+    if (market.toLowerCase() === "top5") {
+      golfarray = pgatop5;
+      evarray = top5ev;
+    }
+    if (market.toLowerCase() === "top10") {
+      golfarray = pgatop10;
+      evarray = top10ev;
+    }
+    if (market.toLowerCase() === "top20") {
+      golfarray = pgatop20;
+      evarray = top20ev;
+    }
+  }
+  if (tour.toLowerCase() === "euro") {
+    if (market.toLowerCase() === "win") {
+    }
+    if (market.toLowerCase() === "top5") {
+    }
+    if (market.toLowerCase() === "top10") {
+    }
+    if (market.toLowerCase() === "top20") {
+    }
+  }
+  if (tour.toLowerCase() === "kft") {
+    if (market.toLowerCase() === "win") {
+    }
+    if (market.toLowerCase() === "top5") {
+    }
+    if (market.toLowerCase() === "top10") {
+    }
+    if (market.toLowerCase() === "top20") {
+    }
+  }
+
   //push key:value pairs to array
   //eventually will need to check if key : value pair exists
   if (market === "win") {
@@ -74,9 +119,11 @@ async function pgaEv(market, golfarray, evarray) {
       } else golfarray[`${key}`] = top20[key];
     }
   }
-  //devig all objects inside pgawin.odds
-  //compare()? pgawin(oldarray) to new data - devigS
-  // console.log(golfarray);
+}
+//devig all objects inside pgawin.odds
+//compare()? pgawin(oldarray) to new data - devigS
+// console.log(golfarray);
+async function devig(golfarray, evarray) {
   for (let obj of golfarray.odds) {
     //calls devig for golfer if odds exist for DG AND FD
     if (obj.fanduel != null && obj.datagolf.baseline_history_fit != null) {
@@ -103,7 +150,8 @@ async function pgaEv(market, golfarray, evarray) {
     }
   }
 }
-export { pgaEv };
+
+export { pgaEv, devig };
 
 //refactor json response local array?  json clone?
 
