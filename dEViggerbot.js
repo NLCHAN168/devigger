@@ -1,6 +1,6 @@
 import { config } from "dotenv";
 import { Client, Embed, EmbedBuilder } from "discord.js";
-import { generate, builder } from "./querybuilder.js";
+import { generateDeviggerUrl, arrayToObjectBuilder } from "./querybuilder.js";
 import { outrightOdds, matchup3ballOdds, allPairings } from "./datagolf.js";
 import { threeball } from "./example3ball.js";
 //TODO: Check if importing arrays is necessary or redundant
@@ -44,7 +44,7 @@ client.on("interactionCreate", async (interaction) => {
         const baseUrl =
           "http://api.crazyninjaodds.com/api/devigger/v1/sportsbook_devigger.aspx?api=open&";
         const endUrl = "DevigMethod=4&Args=ev_p,fo_o,kelly,dm";
-        let queryString = baseUrl + generate(builder(...list)) + endUrl;
+        let queryString = baseUrl + generateDeviggerUrl(arrayToObjectBuilder(...list)) + endUrl;
         await fetch(queryString)
           .then((res) => res.json())
           .then((data) => {

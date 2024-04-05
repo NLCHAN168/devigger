@@ -11,7 +11,8 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "prettier": "3.2.5"
+    "prettier": "3.2.5",
+    "vitest": "^1.4.0"
   },
   "dependencies": {
     "discord.js": "^14.14.1",

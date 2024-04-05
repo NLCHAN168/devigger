@@ -1,4 +1,4 @@
-import { generate, builder } from "./querybuilder.js";
+import { generateDeviggerUrl, arrayToObjectBuilder } from "./querybuilder.js";
 
 const printer = (Final) => {
   console.log("Final Odds: " + Final.Odds);
@@ -19,7 +19,7 @@ export const exampleFunction = async (list) => {
   const baseUrl =
     "http://api.crazyninjaodds.com/api/devigger/v1/sportsbook_devigger.aspx?api=open&";
   const endUrl = "DevigMethod=4&Args=ev_p,fo_o,kelly,dm";
-  let queryString = baseUrl + generate(builder(...list)) + endUrl;
+  let queryString = baseUrl + generateDeviggerUrl(arrayToObjectBuilder(...list)) + endUrl;
   await fetch(queryString)
     .then((res) => res.json())
     .then((data) => printer(data.Final));

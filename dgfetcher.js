@@ -4,7 +4,7 @@ import { win } from "./examplewin.js";
 import { top5 } from "./exampletop5.js";
 import { top10 } from "./exampletop10.js";
 import { top20 } from "./exampletop20.js";
-import { generate, builder } from "./querybuilder.js";
+import { generateDeviggerUrl, arrayToObjectBuilder } from "./querybuilder.js";
 import { config } from "dotenv";
 
 config();
@@ -133,7 +133,7 @@ async function devig(golfarray, evarray) {
         "FinalOdds",
         obj.fanduel,
       ];
-      let queryString = baseUrl + generate(builder(...list)) + endUrl;
+      let queryString = baseUrl + generateDeviggerUrl(arrayToObjectBuilder(...list)) + endUrl;
       await fetch(queryString)
         .then((res) => res.json())
         .then((data) => {
