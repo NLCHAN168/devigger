@@ -317,7 +317,7 @@ client.on("interactionCreate", async (interaction) => {
         }
         if (market === "top5") {
           embed = new EmbedBuilder().setColor(0x0099ff).setTitle(" ");
-          await pgaEv("top5", pgatop5, top5ev);
+          await pgaEv("top5", tour);
           console.log("TOP5EV: " + top5ev);
           for (let i = 0; i < top5ev.length; i++) {
             //if fair value odds is positive, add "+"
