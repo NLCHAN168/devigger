@@ -25,16 +25,16 @@ interface Leg {
 }
 
 interface Final {
-    Odds: string,
-    FairValue: number,
-    FairValue_Odds: number,
-    EV_Percentage: number,
-    Kelly_Full: number,
-    FB_Percentage: number,
-    DevigMethod: "wc:m",
+    Odds: string;
+    FairValue: number;
+    FairValue_Odds: number;
+    EV_Percentage: number;
+    Kelly_Full: number;
+    FB_Percentage: number;
+    DevigMethod: "wc:m";
 }
 
 export interface DevigResponse {
-			[key: `Leg#${number}`]:  Leg;
-			Final: Final
-		  }
+	[key: `Leg#${number}`]:  Leg;
+	Final: Final;
+}
