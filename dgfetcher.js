@@ -119,6 +119,7 @@ async function pgaEv(tour, market) {
       } else golfarray[`${key}`] = top20[key];
     }
   }
+  await devig(golfarray, evarray);
 }
 //devig all objects inside pgawin.odds
 //compare()? pgawin(oldarray) to new data - devigS
@@ -133,7 +134,8 @@ async function devig(golfarray, evarray) {
         "FinalOdds",
         obj.fanduel,
       ];
-      let queryString = baseUrl + generateDeviggerUrl(arrayToObjectBuilder(...list)) + endUrl;
+      let queryString =
+        baseUrl + generateDeviggerUrl(arrayToObjectBuilder(...list)) + endUrl;
       await fetch(queryString)
         .then((res) => res.json())
         .then((data) => {
