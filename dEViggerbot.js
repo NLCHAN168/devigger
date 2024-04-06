@@ -44,7 +44,8 @@ client.on("interactionCreate", async (interaction) => {
         const baseUrl =
           "http://api.crazyninjaodds.com/api/devigger/v1/sportsbook_devigger.aspx?api=open&";
         const endUrl = "DevigMethod=4&Args=ev_p,fo_o,kelly,dm";
-        let queryString = baseUrl + generateDeviggerUrl(arrayToObjectBuilder(...list)) + endUrl;
+        let queryString =
+          baseUrl + generateDeviggerUrl(arrayToObjectBuilder(...list)) + endUrl;
         await fetch(queryString)
           .then((res) => res.json())
           .then((data) => {
@@ -220,7 +221,7 @@ client.on("interactionCreate", async (interaction) => {
           //output to ev array here
           embed = new EmbedBuilder().setColor(0x0099ff).setTitle(" ");
           //FIXME: dont need to pass arrays directly to func, only pass strings and have func handle everything
-          await pgaEv("win", market);
+          await pgaEv(tour, market);
           for (let i = 0; i < winev.length; i++) {
             //if fair value odds is positive, add "+"
             if (winev[i].devig.Final.FairValue_Odds > 0) {
@@ -317,7 +318,7 @@ client.on("interactionCreate", async (interaction) => {
         }
         if (market === "top5") {
           embed = new EmbedBuilder().setColor(0x0099ff).setTitle(" ");
-          await pgaEv("top5", tour);
+          await pgaEv(tour, market);
           console.log("TOP5EV: " + top5ev);
           for (let i = 0; i < top5ev.length; i++) {
             //if fair value odds is positive, add "+"

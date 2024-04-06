@@ -1,5 +1,6 @@
 //@ts-check
 
+import { devig } from "./devigger.js";
 import { win } from "./examplewin.js";
 import { top5 } from "./exampletop5.js";
 import { top10 } from "./exampletop10.js";
@@ -21,10 +22,6 @@ let winev = [];
 let top5ev = [];
 let top10ev = [];
 let top20ev = [];
-
-let baseUrl =
-  "http://api.crazyninjaodds.com/api/devigger/v1/sportsbook_devigger.aspx?api=open&";
-let endUrl = `DevigMethod=4&Args=ev_p,fo_o,kelly,dm`;
 
 //push key:value pairs into pgawin array
 //devig, push plays above ev threshold to winev array
@@ -119,41 +116,11 @@ async function pgaEv(tour, market) {
       } else golfarray[`${key}`] = top20[key];
     }
   }
+  //pass arrays to devig function
   await devig(golfarray, evarray);
 }
-//devig all objects inside pgawin.odds
-//compare()? pgawin(oldarray) to new data - devigS
-// console.log(golfarray);
-async function devig(golfarray, evarray) {
-  for (let obj of golfarray.odds) {
-    //calls devig for golfer if odds exist for DG AND FD
-    if (obj.fanduel != null && obj.datagolf.baseline_history_fit != null) {
-      let list = [
-        "LegOdds",
-        obj.datagolf.baseline_history_fit,
-        "FinalOdds",
-        obj.fanduel,
-      ];
-      let queryString =
-        baseUrl + generateDeviggerUrl(arrayToObjectBuilder(...list)) + endUrl;
-      await fetch(queryString)
-        .then((res) => res.json())
-        .then((data) => {
-          obj.devig = data;
-          //assess EV, if above threshold, push to evarray
-          // TODO: Add edge case for pings that become higher EV
-          if (obj.devig.Final.EV_Percentage > 0.1 && obj.pinged != true) {
-            evarray.push(obj);
-            obj.pinged = true;
-            console.log("EV: " + obj.devig.Final.EV_Percentage);
-            console.log(evarray);
-          }
-        });
-    }
-  }
-}
 
-export { pgaEv, devig };
+export { pgaEv };
 
 //refactor json response local array?  json clone?
 
