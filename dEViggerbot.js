@@ -220,7 +220,6 @@ client.on("interactionCreate", async (interaction) => {
         if (market === "win") {
           //output to ev array here
           embed = new EmbedBuilder().setColor(0x0099ff).setTitle(" ");
-          //FIXME: dont need to pass arrays directly to func, only pass strings and have func handle everything
           await pgaEv(tour, market);
           for (let i = 0; i < winev.length; i++) {
             //if fair value odds is positive, add "+"

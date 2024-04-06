@@ -26,9 +26,7 @@ let top20ev = [];
 //push key:value pairs into pgawin array
 //devig, push plays above ev threshold to winev array
 //output array to discord
-//FIXME: function keeps pushing same golfers to evarray after each slash command call
 //add check statement to only devig if anything changed
-//FIXME: Seperate pgaEv into different functions
 async function pgaEv(tour, market) {
   let golfarray = pgawin;
   let evarray = winev;
