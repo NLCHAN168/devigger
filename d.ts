@@ -38,3 +38,4 @@ export interface DevigResponse {
 	[key: `Leg#${number}`]:  Leg;
 	Final: Final;
 }
+
