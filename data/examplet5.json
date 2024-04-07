@@ -1,0 +1,77 @@
+{
+    "books_offering": [
+      "bet365",
+      "betfair",
+      "betmgm",
+      "betway",
+      "bovada",
+      "caesars",
+      "draftkings",
+      "fanduel",
+      "pointsbet",
+      "unibet",
+      "williamhill"
+    ],
+    "event_name": "THE PLAYERS Championship",
+    "last_updated": "2024-03-17 01:57:46 UTC",
+    "market": "top_5",
+    "notes": "Tournament is live, baseline model not available.",
+    "odds": [
+      {
+        "bet365": "-900",
+        "betfair": "-1667",
+        "betmgm": "-1667",
+        "betway": "-1250",
+        "bovada": "-3500",
+        "caesars": "-909",
+        "datagolf": {
+          "baseline": null,
+          "baseline_history_fit": "-1102"
+        },
+        "dg_id": 19895,
+        "draftkings": "-900",
+        "fanduel": "+100",
+        "player_name": "Schauffele, Xander",
+        "pointsbet": "-900",
+        "unibet": "-2000",
+        "williamhill": "-2000"
+      },
+      {
+        "bet365": "-400",
+        "betfair": "-588",
+        "betmgm": "-556",
+        "betway": "-500",
+        "bovada": "-1000",
+        "caesars": "-400",
+        "datagolf": {
+          "baseline": null,
+          "baseline_history_fit": "-403"
+        },
+        "dg_id": 23604,
+        "draftkings": "-400",
+        "fanduel": "-400",
+        "player_name": "Clark, Wyndham",
+        "pointsbet": "-400",
+        "unibet": "-714",
+        "williamhill": "-500"
+      },
+      {
+        "bet365": "-250",
+        "betfair": "-333",
+        "betmgm": "-303",
+        "betway": "-303",
+        "bovada": "-425",
+        "caesars": "-250",
+        "datagolf": {
+          "baseline": null,
+          "baseline_history_fit": "-256"
+        },
+        "dg_id": 8825,
+        "draftkings": "-250",
+        "fanduel": "-250",
+        "player_name": "Harman, Brian",
+        "pointsbet": "-250",
+        "unibet": "-333",
+        "williamhill": "-333"
+    }]
+} 

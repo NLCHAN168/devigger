@@ -1,0 +1,25 @@
+
+{
+    "bet365": "-900",
+    "betfair": "-1667",
+    "betmgm": "-1667",
+"betway": "-1250",
+ "bovada": "-3500",
+        "caesars": "-909",
+        "datagolf": {
+          "baseline": null,
+          "baseline_history_fit": "-1102"
+        },
+        "dg_id": 19895,
+        "draftkings": "-900",
+        "fanduel": "+100",
+        "player_name": "Schauffele, Xander",
+        "pointsbet": "-900",
+        "unibet": "-2000",
+        "williamhill": "-2000",
+        "devig": {
+            "Leg#1":{"Odds":"-1102","MarketJuice":0,"FairValue":0.916805324459235},
+            "Final":{"Odds":"+100","FairValue":0.916805324459235,"FairValue_Odds":-1102,"EV_Percentage":0.833610648918469,"Kelly_Full":83.3610648918469,"DevigMethod":"wc:m"}
+        }
+      }
+    

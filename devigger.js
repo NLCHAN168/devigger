@@ -5,9 +5,9 @@ const baseUrl =
 const endUrl = "DevigMethod=4&Args=ev_p,fo_o,kelly,dm";
 
 //devig all objects inside array.odds
-async function devig(golfarray, evarray) {
+async function devig(response, evarray) {
   try {
-    for (let obj of golfarray.odds) {
+    for (let obj of response.odds) {
       //calls devig for golfer if odds exist for DG AND FD
       if (obj.fanduel != null && obj.datagolf.baseline_history_fit != null) {
         let list = [
@@ -29,8 +29,10 @@ async function devig(golfarray, evarray) {
               obj.pinged = true;
               console.log("EV: " + obj.devig.Final.EV_Percentage);
               console.log("finalodds for fd: " + obj.fanduel);
-              console.log(evarray);
+              // console.log(evarray);
+              console.log(obj);
             }
+            return obj;
           });
       }
     }
