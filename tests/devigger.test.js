@@ -1,4 +1,5 @@
 import t5json from "../data/exampletop5.json" assert { type: "json" };
+import examplet5 from "../data/examplet5.json" assert { type: "json" };
 import devigt5 from "../data/devigt5.json" assert { type: "json" };
 import { top5ev } from "./dgfetcher.js";
 import { describe, it, expect } from "vitest";
@@ -19,6 +20,6 @@ describe("Devigger tester", () => {
 
 describe("Devigs odds from datagolf json response", () => {
   it("returns a object with attribute obj.devig that holds a Final object if passed a json response", async () => {
-    expect(await devig(t5json, top5ev)).toStrictEqual(devigt5);
-  }, 1000000);
+    expect(await devig(examplet5, top5ev)).toStrictEqual(devigt5);
+  });
 });

@@ -6,40 +6,35 @@ const endUrl = "DevigMethod=4&Args=ev_p,fo_o,kelly,dm";
 
 //devig all objects inside array.odds
 async function devig(response, evarray) {
-  try {
-    for (let obj of response.odds) {
-      //calls devig for golfer if odds exist for DG AND FD
-      if (obj.fanduel != null && obj.datagolf.baseline_history_fit != null) {
-        let list = [
-          "LegOdds",
-          obj.datagolf.baseline_history_fit,
-          "FinalOdds",
-          obj.fanduel,
-        ];
-        let queryString =
-          baseUrl + generateDeviggerUrl(arrayToObjectBuilder(...list)) + endUrl;
-        await fetch(queryString)
-          .then((res) => res.json())
-          .then((data) => {
-            obj.devig = data;
-            //assess EV, if above threshold, push to evarray
-            // TODO: Add edge case for pings that become higher EV
-            if (obj.devig.Final.EV_Percentage > 0.1 && obj.pinged != true) {
-              evarray.push(obj);
-              obj.pinged = true;
-              console.log("EV: " + obj.devig.Final.EV_Percentage);
-              console.log("finalodds for fd: " + obj.fanduel);
-              // console.log(evarray);
-              console.log(obj);
-            }
-            return obj;
-          });
-      }
+  for (let obj of response.odds) {
+    //calls devig for golfer if odds exist for DG AND FD
+    if (obj.fanduel != null && obj.datagolf.baseline_history_fit != null) {
+      let list = [
+        "LegOdds",
+        obj.datagolf.baseline_history_fit,
+        "FinalOdds",
+        obj.fanduel,
+      ];
+      let queryString =
+        baseUrl + generateDeviggerUrl(arrayToObjectBuilder(...list)) + endUrl;
+      await fetch(queryString)
+        .then((res) => res.json())
+        .then((data) => {
+          obj.devig = data;
+          //assess EV, if above threshold, push to evarray
+          // TODO: Add edge case for pings that become higher EV
+          if (obj.devig.Final.EV_Percentage > 0.1 && obj.pinged != true) {
+            evarray.push(obj);
+            obj.pinged = true;
+            console.log("EV: " + obj.devig.Final.EV_Percentage);
+            console.log("finalodds for fd: " + obj.fanduel);
+            // console.log(evarray);
+            // console.log(obj);
+          }
+        });
     }
-  } catch (e) {
-    console.log(e);
-    return;
+    //TODO: DEL return statement on deployment
+    return obj;
   }
 }
-
 export { devig };

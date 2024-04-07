@@ -20,6 +20,7 @@
         "devig": {
             "Leg#1":{"Odds":"-1102","MarketJuice":0,"FairValue":0.916805324459235},
             "Final":{"Odds":"+100","FairValue":0.916805324459235,"FairValue_Odds":-1102,"EV_Percentage":0.833610648918469,"Kelly_Full":83.3610648918469,"DevigMethod":"wc:m"}
-        }
+        },
+        "pinged": true
       }
     
