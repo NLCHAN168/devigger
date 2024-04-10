@@ -8,7 +8,7 @@ const endUrl = "DevigMethod=4&Args=ev_p,fo_o,kelly,dm";
 async function devig(response, evarray) {
   for (let obj of response.odds) {
     //calls devig for golfer if odds exist for DG AND FD
-    if (obj.fanduel != null && obj.datagolf.baseline_history_fit != null) {
+    if (obj.fanduel !== null && obj.datagolf.baseline_history_fit != null) {
       let list = [
         "LegOdds",
         obj.datagolf.baseline_history_fit,
@@ -23,7 +23,7 @@ async function devig(response, evarray) {
           obj.devig = data;
           //assess EV, if above threshold, push to evarray
           // TODO: Add edge case for pings that become higher EV
-          if (obj.devig.Final.EV_Percentage > 0.1 && obj.pinged != true) {
+          if (obj.devig.Final.EV_Percentage > 0.1 && obj.pinged !== true) {
             evarray.push(obj);
             obj.pinged = true;
             console.log("EV: " + obj.devig.Final.EV_Percentage);

@@ -18,8 +18,19 @@ describe("Devigger tester", () => {
   });
 });
 
+await devig(examplet5, top5ev);
 describe("Devigs odds from datagolf json response", () => {
   it("returns a object with attribute obj.devig that holds a Final object if passed a json response", async () => {
-    expect(await devig(examplet5, top5ev)).toStrictEqual(devigt5);
+    expect(top5ev[0].devig).toStrictEqual({
+      "Leg#1": { Odds: "-1102", MarketJuice: 0, FairValue: 0.916805324459235 },
+      Final: {
+        Odds: "+100",
+        FairValue: 0.916805324459235,
+        FairValue_Odds: -1102,
+        EV_Percentage: 0.833610648918469,
+        Kelly_Full: 83.3610648918469,
+        DevigMethod: "wc:m",
+      },
+    });
   });
 });
