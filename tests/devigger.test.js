@@ -1,10 +1,9 @@
 import t5json from "../data/exampletop5.json" assert { type: "json" };
 import examplet5 from "../data/examplet5.json" assert { type: "json" };
-import devigt5 from "../data/devigt5.json" assert { type: "json" };
-import { top5ev } from "./dgfetcher.js";
+// import devigt5 from "../data/devigt5.json" assert { type: "json" };
 import { describe, it, expect } from "vitest";
 // import t5json from "data/exampletop5.json";
-import { devig } from "./devigger.js";
+import { devig } from "src/devigger.js";
 
 //TODO: Actually hit the API
 const baseUrl =
@@ -18,6 +17,7 @@ describe("Devigger tester", () => {
   });
 });
 
+let top5ev = [];
 await devig(examplet5, top5ev);
 describe("Devigs odds from datagolf json response", () => {
   it("returns a object with attribute obj.devig that holds a Final object if passed a json response", async () => {

@@ -1,9 +1,9 @@
 import { config } from "dotenv";
 import { Client, Embed, EmbedBuilder } from "discord.js";
-import { generateDeviggerUrl, arrayToObjectBuilder } from "./querybuilderv2.js";
-import { outrightOdds, matchup3ballOdds, allPairings } from "./datagolfv2.js";
-import { threeball } from "./example3ballv2.js";
-import { findEV } from "./dgfetcherv2.js";
+import { generateDeviggerUrl, arrayToObjectBuilder } from "./querybuilder.js";
+import { outrightOdds, matchup3ballOdds, allPairings } from "./datagolf.js";
+import { threeball } from "./example3ball.js";
+import { findEV } from "./dgfetcher.js";
 
 config();
 const client = new Client({

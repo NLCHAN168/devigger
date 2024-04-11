@@ -3,7 +3,7 @@
   "type": "module",
   "version": "1.0.0",
   "description": "",
-  "main": "datagolf.js",
+  "main": "src/datagolf.js",
   "scripts": {
     "test": "vitest"
   },

@@ -28,13 +28,14 @@ async function devig(response, evarray) {
             obj.pinged = true;
             console.log("EV: " + obj.devig.Final.EV_Percentage);
             console.log("finalodds for fd: " + obj.fanduel);
-            // console.log(evarray);
-            // console.log(obj);
+          }
+          //if fair value odds is positive, add "+" to value
+          if (obj.devig.Final.FairValue_Odds > 0) {
+            obj.devig.Final.FairValue_Odds =
+              "+" + obj.devig.Final.FairValue_Odds;
           }
         });
     }
-    //TODO: DEL return statement on deployment
-    return obj;
   }
 }
 export { devig };
