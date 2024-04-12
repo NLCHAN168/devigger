@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { arrayToObjectBuilder, generateDeviggerUrl } from "../querybuilder.js";
+import { arrayToObjectBuilder, generateDeviggerUrl } from "src/querybuilder.js";
 
 describe("array of key values to objects", () => {
   it("returns an empty object", () => {
