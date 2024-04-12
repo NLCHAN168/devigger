@@ -192,8 +192,8 @@ client.on("interactionCreate", async (interaction) => {
       const tour = interaction.options.getString("tour");
       const market = interaction.options.getString("market");
       let evarray = await findEV(tour, market);
-      embed = new EmbedBuilder().setColor(0x0099ff).setTitle(" ");
       for (let i = 0; i < evarray.length; i++) {
+        embed = new EmbedBuilder().setColor(0x0099ff).setTitle(" ");
         embed.addFields(
           {
             name: evarray[i].event_name,
@@ -208,7 +208,9 @@ client.on("interactionCreate", async (interaction) => {
             name:
               "```" +
               "EV: " +
-              evarray[i].devig.Final.EV_Percentage.toFixed(2) * 100 +
+              Math.round(
+                evarray[i].devig.Final.EV_Percentage.toFixed(2) * 100
+              ) +
               "%" +
               "```",
             value: " ",
@@ -216,7 +218,10 @@ client.on("interactionCreate", async (interaction) => {
           },
           {
             name:
-              "```" + "FV: " + evarray[i].devig.Final.FairValue_Odds + "```",
+              "```" +
+              "FV: " +
+              Math.round(evarray[i].devig.Final.FairValue_Odds) +
+              "```",
             value: " ",
             inline: true,
           },
@@ -279,8 +284,8 @@ client.on("interactionCreate", async (interaction) => {
             inline: true,
           }
         );
+        interaction.followUp({ embeds: [embed] });
       }
-      interaction.editReply({ embeds: [embed] });
     }
   }
 });

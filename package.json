@@ -5,7 +5,8 @@
   "description": "",
   "main": "src/datagolf.js",
   "scripts": {
-    "test": "vitest"
+    "test": "vitest",
+    "dev": "node src/dEViggerbot.js"
   },
   "keywords": [],
   "author": "",

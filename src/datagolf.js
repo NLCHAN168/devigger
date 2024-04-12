@@ -8,10 +8,9 @@ export const outrightOdds = async (list) => {
   const endUrl = `&odds_format=american&file_format=json&key=${process.env.DG_TOKEN}`;
   const queryString =
     baseUrl + generateDeviggerUrl(arrayToObjectBuilder(...list)) + endUrl;
-  let golflist = await fetch(queryString).then((res) => {
+  return await fetch(queryString).then((res) => {
     return res.json();
   });
-  return golflist;
 };
 
 //need to key into data.match_list.odds per key

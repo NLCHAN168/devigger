@@ -21,6 +21,8 @@ async function devig(response, evarray) {
         .then((res) => res.json())
         .then((data) => {
           obj.devig = data;
+          obj.event_name = response.event_name;
+          obj.market = response.market;
           //assess EV, if above threshold, push to evarray
           // TODO: Add edge case for pings that become higher EV
           if (obj.devig.Final.EV_Percentage > 0.1 && obj.pinged !== true) {
