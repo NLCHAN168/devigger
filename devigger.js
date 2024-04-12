@@ -7,6 +7,9 @@ const endUrl = "DevigMethod=4&Args=ev_p,fo_o,kelly,dm";
 //devig all objects inside array.odds
 async function devig(response, evarray) {
   for (let obj of response.odds) {
+    //add event name to each obj
+    obj.event_name = response.event_name;
+    obj.market = response.market;
     //calls devig for golfer if odds exist for DG AND FD
     if (obj.fanduel !== null && obj.datagolf.baseline_history_fit != null) {
       let list = [
