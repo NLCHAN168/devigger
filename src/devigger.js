@@ -10,8 +10,7 @@ async function devig(response, evarray) {
     //add event name to each golfer ob
     golfer.event_name = response.event_name;
     golfer.market = response.market;
-    //calls devig for golfer if odds exist for DG AND FD
-    //FIXME: Sometimes devig returns invalid final odds"
+    //calls devig for golfer if odds exist for FD
     if (
       golfer.hasOwnProperty("fanduel") &&
       golfer.datagolf.baseline_history_fit !== null
@@ -34,7 +33,6 @@ async function devig(response, evarray) {
           //assess EV, if above threshold, push to evarray
           // TODO: Add edge case for pings that become higher EV
           if (
-            //FIXME: fix cases where EV_Percentage is undefined
             golfer.devig.Final.EV_Percentage > 0.1 &&
             golfer.pinged !== true
           ) {
