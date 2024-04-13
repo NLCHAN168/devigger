@@ -40,14 +40,16 @@ const slashRegister = async () => {
           ),
         new SlashCommandBuilder()
           .setName("golflist")
-          .setDescription("populate golf list (PGA)")
+          .setDescription("populate golf list (PGA/Euro/KFT/opp/alt)")
           .addStringOption((option) =>
             option.setName("tour").setDescription("tour name").setRequired(true)
           )
           .addStringOption((option) =>
             option
               .setName("market")
-              .setDescription("market name: win/top5/top10/top20")
+              .setDescription(
+                "market name: win/top_5/top_10/top_20/mc/make_cut/frl"
+              )
               .setRequired(true)
           ),
       ],

@@ -186,105 +186,122 @@ client.on("interactionCreate", async (interaction) => {
 client.on("interactionCreate", async (interaction) => {
   if (interaction.isCommand()) {
     if (interaction.commandName === "golflist") {
-      let markets = ["win", "top5", "top10", "top20", "mc", "make_cut", "frl"];
+      let markets = [
+        "win",
+        "top_5",
+        "top_10",
+        "top_20",
+        "mc",
+        "make_cut",
+        "frl",
+      ];
+      let tours = ["pga", "euro", "kft", "opp", "alt"];
       await interaction.deferReply();
       let embed;
       const tour = interaction.options.getString("tour");
       const market = interaction.options.getString("market");
-      let evarray = await findEV(tour, market);
-      for (let i = 0; i < evarray.length; i++) {
-        embed = new EmbedBuilder().setColor(0x0099ff).setTitle(" ");
-        embed.addFields(
-          {
-            name: evarray[i].event_name,
-            value:
-              evarray[i].player_name +
-              " " +
-              evarray[i].market +
-              " " +
-              evarray[i].fanduel,
-          },
-          {
-            name:
-              "```" +
-              "EV: " +
-              Math.round(
-                evarray[i].devig.Final.EV_Percentage.toFixed(2) * 100
-              ) +
-              "%" +
-              "```",
-            value: " ",
-            inline: true,
-          },
-          {
-            name:
-              "```" +
-              "FV: " +
-              Math.round(evarray[i].devig.Final.FairValue_Odds) +
-              "```",
-            value: " ",
-            inline: true,
-          },
-          {
-            name: "\t",
-            value: "\t",
-          },
-          {
-            name:
-              "```" +
-              "HK : " +
-              (evarray[i].devig.Final.Kelly_Full / 2).toFixed(2) +
-              "```",
-            value: " ",
-            inline: true,
-          },
-          {
-            name:
-              "```" +
-              "QK : " +
-              (evarray[i].devig.Final.Kelly_Full / 4).toFixed(2) +
-              "```",
-            value: " ",
-            inline: true,
-          },
-          {
-            name: "\t",
-            value: "\t",
-          },
-          {
-            name:
-              "```" +
-              "SK : " +
-              (evarray[i].devig.Final.Kelly_Full / 6).toFixed(2) +
-              "```",
-            value: " ",
-            inline: true,
-          },
-          {
-            name:
-              "```" +
-              "EK : " +
-              (evarray[i].devig.Final.Kelly_Full / 8).toFixed(2) +
-              "```",
-            value: " ",
-            inline: true,
-          },
-          {
-            name: "\t",
-            value: "\t",
-          },
-          {
-            name:
-              "```" +
-              "WIN: " +
-              (evarray[i].devig.Final.FairValue * 100).toFixed(2) +
-              "%" +
-              "```",
-            value: " ",
-            inline: true,
-          }
-        );
-        interaction.followUp({ embeds: [embed] });
+      if (tours.includes(tour) && markets.includes(market)) {
+        let evarray = await findEV(tour, market);
+        if (evarray.length === 0) {
+          interaction.editReply("NO EV");
+          return;
+        }
+        for (let i = 0; i < evarray.length; i++) {
+          embed = new EmbedBuilder().setColor(0x0099ff).setTitle(" ");
+          embed.addFields(
+            {
+              name: evarray[i].event_name,
+              value:
+                evarray[i].player_name +
+                " " +
+                evarray[i].market +
+                " " +
+                evarray[i].fanduel,
+            },
+            {
+              name:
+                "```" +
+                "EV: " +
+                Math.round(
+                  evarray[i].devig.Final.EV_Percentage.toFixed(2) * 100
+                ) +
+                "%" +
+                "```",
+              value: " ",
+              inline: true,
+            },
+            {
+              name:
+                "```" +
+                "FV: " +
+                Math.round(evarray[i].devig.Final.FairValue_Odds) +
+                "```",
+              value: " ",
+              inline: true,
+            },
+            {
+              name: "\t",
+              value: "\t",
+            },
+            {
+              name:
+                "```" +
+                "HK : " +
+                (evarray[i].devig.Final.Kelly_Full / 2).toFixed(2) +
+                "```",
+              value: " ",
+              inline: true,
+            },
+            {
+              name:
+                "```" +
+                "QK : " +
+                (evarray[i].devig.Final.Kelly_Full / 4).toFixed(2) +
+                "```",
+              value: " ",
+              inline: true,
+            },
+            {
+              name: "\t",
+              value: "\t",
+            },
+            {
+              name:
+                "```" +
+                "SK : " +
+                (evarray[i].devig.Final.Kelly_Full / 6).toFixed(2) +
+                "```",
+              value: " ",
+              inline: true,
+            },
+            {
+              name:
+                "```" +
+                "EK : " +
+                (evarray[i].devig.Final.Kelly_Full / 8).toFixed(2) +
+                "```",
+              value: " ",
+              inline: true,
+            },
+            {
+              name: "\t",
+              value: "\t",
+            },
+            {
+              name:
+                "```" +
+                "WIN: " +
+                (evarray[i].devig.Final.FairValue * 100).toFixed(2) +
+                "%" +
+                "```",
+              value: " ",
+              inline: true,
+            }
+          );
+          interaction.followUp({ embeds: [embed] });
+        }
+      } else {
+        interaction.editReply("Please enter a valid tour/market");
       }
     }
   }

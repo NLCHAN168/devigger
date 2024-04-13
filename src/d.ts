@@ -7,6 +7,7 @@ interface OddsEntry extends Record<BookOffering, string> {
 		baseline_history_fit: string;
 	};
 	player_name?: string;
+	
 }
 
 export interface DatagolfResponse {
