@@ -12,6 +12,7 @@ config();
 //devig, push plays above ev threshold to winev array
 //output array to discord
 //add check statement to only devig if anything changed
+//FIXME: Test functionality for all tours (KFT broken)
 async function findEV(tour, market) {
   let evarray = [];
   let list = ["tour", tour, "market", market];
