@@ -1,0 +1,57 @@
+{
+    "books_offering": [
+      "bet365",
+      "betfair",
+      "betmgm",
+      "betway",
+      "bovada",
+      "caesars",
+      "draftkings",
+      "fanduel",
+      "skybet",
+      "unibet",
+      "williamhill"
+    ],
+    "event_name": "LECOM Suncoast Classic",
+    "last_updated": "2024-04-17 04:03:44 UTC",
+    "market": "win",
+    "notes": "Only baseline model is available for Korn Ferry Tour events.",
+    "odds": [
+      {
+        "bet365": "+1800",
+        "betfair": "+1400",
+        "betmgm": "+1600",
+        "betway": "+1600",
+        "bovada": "+1600",
+        "caesars": "+1800",
+        "datagolf": {
+          "baseline": "+3007"
+        },
+        "dg_id": 18424,
+        "draftkings": "+1600",
+        "fanduel": "+1400",
+        "player_name": "Roy, Kevin",
+        "skybet": "+1800",
+        "unibet": "+2200",
+        "williamhill": "+1600"
+      },
+      {
+        "bet365": "+1800",
+        "betfair": "+1800",
+        "betmgm": "+1800",
+        "betway": "+1800",
+        "bovada": "+1600",
+        "caesars": "+2300",
+        "datagolf": {
+          "baseline": "+4067"
+        },
+        "dg_id": 27819,
+        "draftkings": "+1800",
+        "fanduel": "+1800",
+        "player_name": "Castillo, Ricky",
+        "skybet": "+1800",
+        "unibet": "+2000",
+        "williamhill": "+1600"
+      }
+    ]
+    }

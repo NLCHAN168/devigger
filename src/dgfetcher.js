@@ -1,6 +1,6 @@
 //@ts-check
 
-import { devig } from "./devigger.js";
+import { devig, devigKFT } from "./devigger.js";
 import { outrightOdds } from "./datagolf.js";
 import { generateDeviggerUrl, arrayToObjectBuilder } from "./querybuilder.js";
 import { config } from "dotenv";
@@ -17,7 +17,9 @@ async function findEV(tour, market) {
   let evarray = [];
   let list = ["tour", tour, "market", market];
   let dgresponse = await outrightOdds(list);
-  await devig(dgresponse, evarray);
+  if (tour === "kft") {
+    await devigKFT(dgresponse, evarray);
+  } else await devig(dgresponse, evarray);
   return evarray;
 }
 export { findEV };
