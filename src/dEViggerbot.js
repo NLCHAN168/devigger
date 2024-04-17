@@ -200,6 +200,12 @@ client.on("interactionCreate", async (interaction) => {
       let embed;
       const tour = interaction.options.getString("tour");
       const market = interaction.options.getString("market");
+      if (
+        (tour.toLowerCase() === "kft" && market.toLowerCase() !== "win") ||
+        "top_5"
+      ) {
+        interaction.editReply("No available Massachusetts lines");
+      }
       if (tours.includes(tour) && markets.includes(market)) {
         let evarray = await findEV(tour, market);
         if (evarray.length === 0) {
