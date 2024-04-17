@@ -208,96 +208,191 @@ client.on("interactionCreate", async (interaction) => {
         }
         for (let i = 0; i < evarray.length; i++) {
           embed = new EmbedBuilder().setColor(0x0099ff).setTitle(" ");
-          embed.addFields(
-            {
-              name: evarray[i].event_name,
-              value:
-                evarray[i].player_name +
-                " " +
-                evarray[i].market +
-                " " +
-                evarray[i].fanduel,
-            },
-            {
-              name:
-                "```" +
-                "EV: " +
-                Math.round(
-                  evarray[i].devig.Final.EV_Percentage.toFixed(2) * 100
-                ) +
-                "%" +
-                "```",
-              value: " ",
-              inline: true,
-            },
-            {
-              name:
-                "```" +
-                "FV: " +
-                Math.round(evarray[i].devig.Final.FairValue_Odds) +
-                "```",
-              value: " ",
-              inline: true,
-            },
-            {
-              name: "\t",
-              value: "\t",
-            },
-            {
-              name:
-                "```" +
-                "HK : " +
-                (evarray[i].devig.Final.Kelly_Full / 2).toFixed(2) +
-                "```",
-              value: " ",
-              inline: true,
-            },
-            {
-              name:
-                "```" +
-                "QK : " +
-                (evarray[i].devig.Final.Kelly_Full / 4).toFixed(2) +
-                "```",
-              value: " ",
-              inline: true,
-            },
-            {
-              name: "\t",
-              value: "\t",
-            },
-            {
-              name:
-                "```" +
-                "SK : " +
-                (evarray[i].devig.Final.Kelly_Full / 6).toFixed(2) +
-                "```",
-              value: " ",
-              inline: true,
-            },
-            {
-              name:
-                "```" +
-                "EK : " +
-                (evarray[i].devig.Final.Kelly_Full / 8).toFixed(2) +
-                "```",
-              value: " ",
-              inline: true,
-            },
-            {
-              name: "\t",
-              value: "\t",
-            },
-            {
-              name:
-                "```" +
-                "WIN: " +
-                (evarray[i].devig.Final.FairValue * 100).toFixed(2) +
-                "%" +
-                "```",
-              value: " ",
-              inline: true,
-            }
-          );
+          if (evarray[i].hasOwnProperty("fanduel")) {
+            embed.addFields(
+              {
+                name: evarray[i].event_name,
+                value:
+                  evarray[i].player_name +
+                  " " +
+                  evarray[i].market +
+                  " " +
+                  evarray[i].fanduel +
+                  " FD",
+              },
+              {
+                name:
+                  "```" +
+                  "EV: " +
+                  Math.round(
+                    evarray[i].devig.Final.EV_Percentage.toFixed(2) * 100
+                  ) +
+                  "%" +
+                  "```",
+                value: " ",
+                inline: true,
+              },
+              {
+                name:
+                  "```" +
+                  "FV: " +
+                  Math.round(evarray[i].devig.Final.FairValue_Odds) +
+                  "```",
+                value: " ",
+                inline: true,
+              },
+              {
+                name: "\t",
+                value: "\t",
+              },
+              {
+                name:
+                  "```" +
+                  "HK : " +
+                  (evarray[i].devig.Final.Kelly_Full / 2).toFixed(2) +
+                  "```",
+                value: " ",
+                inline: true,
+              },
+              {
+                name:
+                  "```" +
+                  "QK : " +
+                  (evarray[i].devig.Final.Kelly_Full / 4).toFixed(2) +
+                  "```",
+                value: " ",
+                inline: true,
+              },
+              {
+                name: "\t",
+                value: "\t",
+              },
+              {
+                name:
+                  "```" +
+                  "SK : " +
+                  (evarray[i].devig.Final.Kelly_Full / 6).toFixed(2) +
+                  "```",
+                value: " ",
+                inline: true,
+              },
+              {
+                name:
+                  "```" +
+                  "EK : " +
+                  (evarray[i].devig.Final.Kelly_Full / 8).toFixed(2) +
+                  "```",
+                value: " ",
+                inline: true,
+              },
+              {
+                name: "\t",
+                value: "\t",
+              },
+              {
+                name:
+                  "```" +
+                  "WIN: " +
+                  (evarray[i].devig.Final.FairValue * 100).toFixed(2) +
+                  "%" +
+                  "```",
+                value: " ",
+                inline: true,
+              }
+            );
+          } else {
+            embed.addFields(
+              {
+                name: evarray[i].event_name,
+                value:
+                  evarray[i].player_name +
+                  " " +
+                  evarray[i].market +
+                  " " +
+                  evarray[i].draftkings +
+                  " DK",
+              },
+              {
+                name:
+                  "```" +
+                  "EV: " +
+                  Math.round(
+                    evarray[i].devig.Final.EV_Percentage.toFixed(2) * 100
+                  ) +
+                  "%" +
+                  "```",
+                value: " ",
+                inline: true,
+              },
+              {
+                name:
+                  "```" +
+                  "FV: " +
+                  Math.round(evarray[i].devig.Final.FairValue_Odds) +
+                  "```",
+                value: " ",
+                inline: true,
+              },
+              {
+                name: "\t",
+                value: "\t",
+              },
+              {
+                name:
+                  "```" +
+                  "HK : " +
+                  (evarray[i].devig.Final.Kelly_Full / 2).toFixed(2) +
+                  "```",
+                value: " ",
+                inline: true,
+              },
+              {
+                name:
+                  "```" +
+                  "QK : " +
+                  (evarray[i].devig.Final.Kelly_Full / 4).toFixed(2) +
+                  "```",
+                value: " ",
+                inline: true,
+              },
+              {
+                name: "\t",
+                value: "\t",
+              },
+              {
+                name:
+                  "```" +
+                  "SK : " +
+                  (evarray[i].devig.Final.Kelly_Full / 6).toFixed(2) +
+                  "```",
+                value: " ",
+                inline: true,
+              },
+              {
+                name:
+                  "```" +
+                  "EK : " +
+                  (evarray[i].devig.Final.Kelly_Full / 8).toFixed(2) +
+                  "```",
+                value: " ",
+                inline: true,
+              },
+              {
+                name: "\t",
+                value: "\t",
+              },
+              {
+                name:
+                  "```" +
+                  "WIN: " +
+                  (evarray[i].devig.Final.FairValue * 100).toFixed(2) +
+                  "%" +
+                  "```",
+                value: " ",
+                inline: true,
+              }
+            );
+          }
           interaction.followUp({ embeds: [embed] });
         }
       } else {
