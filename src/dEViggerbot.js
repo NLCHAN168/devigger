@@ -218,7 +218,7 @@ client.on("interactionCreate", async (interaction) => {
                   evarray[i].market +
                   " " +
                   evarray[i].fanduel +
-                  " FD",
+                  " FanDuel",
               },
               {
                 name:
@@ -310,7 +310,7 @@ client.on("interactionCreate", async (interaction) => {
                   evarray[i].market +
                   " " +
                   evarray[i].draftkings +
-                  " DK",
+                  " DraftKings",
               },
               {
                 name:
