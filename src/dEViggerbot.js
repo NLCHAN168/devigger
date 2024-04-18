@@ -202,7 +202,7 @@ client.on("interactionCreate", async (interaction) => {
       const market = interaction.options.getString("market");
       if (
         (tour.toLowerCase() === "kft" && market.toLowerCase() !== "win") ||
-        market.toLowerCase() !== "top_5"
+        (tour.toLowerCase() === "kft" && market.toLowerCase() !== "top_5")
       ) {
         interaction.editReply("No available Massachusetts lines");
       }
