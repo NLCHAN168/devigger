@@ -30,7 +30,6 @@ async function devig(response, evarray) {
           golfer.event_name = response.event_name;
           golfer.market = response.market;
           //assess EV, if above threshold, push to evarray
-          // TODO: Add edge case for pings that become higher EV
           if (
             golfer.devig.Final.EV_Percentage > 0.1 &&
             golfer.pinged !== true

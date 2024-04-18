@@ -40,7 +40,7 @@ const slashRegister = async () => {
           ),
         new SlashCommandBuilder()
           .setName("golflist")
-          .setDescription("populate golf list (PGA/Euro/KFT/opp/alt)")
+          .setDescription("Calculate EV from PGA/Euro/KFT/opp/alt outrights")
           .addStringOption((option) =>
             option.setName("tour").setDescription("tour name").setRequired(true)
           )
@@ -52,6 +52,20 @@ const slashRegister = async () => {
               )
               .setRequired(true)
           ),
+        new SlashCommandBuilder()
+          .setName("matchups")
+          .setDescription(
+            "Calculate EV of matchups and 3balls - pga, euro, opp (opposite field PGA TOUR event), alt"
+          )
+          .addStringOption((option) =>
+            option.setName("tour").setDescription("tour name").setRequired(true)
+          ),
+        addStringOption((option) =>
+          option
+            .setName("market")
+            .setDescription("tournament_matchups, round_matchups, 3_balls")
+            .setRequired(true)
+        ),
       ],
     });
   } catch (error) {

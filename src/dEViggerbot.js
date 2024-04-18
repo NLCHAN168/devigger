@@ -1,10 +1,10 @@
 import { config } from "dotenv";
 import { Client, Embed, EmbedBuilder } from "discord.js";
 import { generateDeviggerUrl, arrayToObjectBuilder } from "./querybuilder.js";
-import { outrightOdds, matchup3ballOdds, allPairings } from "./datagolf.js";
-import { threeball } from "./example3ball.js";
 import { findEV } from "./dgfetcher.js";
 
+//TODO: add caching data
+//TODO: cache on startup, call golf command on mondays at 1:30pm est
 config();
 const client = new Client({
   intents: ["Guilds", "GuildMessages", "GuildMembers"],

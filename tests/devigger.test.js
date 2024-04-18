@@ -5,7 +5,6 @@ import { describe, it, expect } from "vitest";
 // import t5json from "data/exampletop5.json";
 import { devig } from "src/devigger.js";
 
-//TODO: Actually hit the API
 const baseUrl =
   "http://api.crazyninjaodds.com/api/devigger/v1/sportsbook_devigger.aspx?api=open&";
 
