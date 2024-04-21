@@ -53,19 +53,29 @@ const slashRegister = async () => {
               .setRequired(true)
           ),
         new SlashCommandBuilder()
+          .setName("threeballs")
+          .setDescription("Calculate EV of 3 balls")
+          .addStringOption((option) =>
+            option
+              .setName("tour")
+              .setDescription("tour name - pga, euro, opp, alt")
+              .setRequired(true)
+          ),
+        new SlashCommandBuilder()
           .setName("matchups")
-          .setDescription(
-            "Calculate EV of matchups and 3balls - pga, euro, opp (opposite field PGA TOUR event), alt"
+          .setDescription("Calculate EV of matchups")
+          .addStringOption((option) =>
+            option
+              .setName("tour")
+              .setDescription("tour name - pga, euro, opp, alt")
+              .setRequired(true)
           )
           .addStringOption((option) =>
-            option.setName("tour").setDescription("tour name").setRequired(true)
+            option
+              .setName("market")
+              .setDescription("tournament_matchups, round_matchups")
+              .setRequired(true)
           ),
-        addStringOption((option) =>
-          option
-            .setName("market")
-            .setDescription("tournament_matchups, round_matchups, 3_balls")
-            .setRequired(true)
-        ),
       ],
     });
   } catch (error) {

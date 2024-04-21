@@ -1,7 +1,6 @@
 //@ts-check
-
-import { devig, devigKFT } from "./devigger.js";
-import { outrightOdds } from "./datagolf.js";
+import { devig, devigKFT, devig3ball } from "./devigger.js";
+import { outrightOdds, tBallOdds } from "./datagolf.js";
 import { config } from "dotenv";
 
 config();
@@ -20,4 +19,12 @@ async function findEV(tour, market) {
   } else await devig(dgresponse, evarray);
   return evarray;
 }
-export { findEV };
+
+async function tBallEV(tour) {
+  let evarray = [];
+  let list = ["tour", tour, "market", "3_balls"];
+  let dgresponse = await tBallOdds(list);
+  await devig3ball(dgresponse, evarray);
+  return evarray;
+}
+export { findEV, tBallEV };

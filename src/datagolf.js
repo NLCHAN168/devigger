@@ -25,7 +25,7 @@ export const outrightOdds = async (list) => {
  * @param {*} list
  * @returns {Promise<ThreeballResponse>}
  */
-export const matchup3ballOdds = async (list) => {
+export const tBallOdds = async (list) => {
   const baseUrl = "https://feeds.datagolf.com/betting-tools/matchups?";
   const endUrl = `&odds_format=american&file_format=json&key=${process.env.DG_TOKEN}`;
   const queryString =

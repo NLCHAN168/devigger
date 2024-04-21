@@ -1,7 +1,8 @@
 import { config } from "dotenv";
 import { Client, Embed, EmbedBuilder } from "discord.js";
 import { generateDeviggerUrl, arrayToObjectBuilder } from "./querybuilder.js";
-import { findEV } from "./dgfetcher.js";
+import { findEV, tBallEV } from "./dgfetcher.js";
+// import { tBallOdds } from "./datagolf.js";
 
 //TODO: add caching data
 //TODO: cache on startup, call golf command on mondays at 1:30pm est
@@ -404,6 +405,57 @@ client.on("interactionCreate", async (interaction) => {
       } else {
         interaction.editReply("Please enter a valid tour/market");
       }
+    }
+  }
+});
+
+client.on("interactionCreate", async (interaction) => {
+  if (interaction.isCommand()) {
+    if (interaction.commandName === "threeballs") {
+      let tours = ["pga", "euro", "opp", "alt"];
+      await interaction.deferReply();
+      let embed;
+      const tour = interaction.options.getString("tour");
+      if (tours.includes(tour.toLowerCase())) {
+        let evarray = await tBallEV(tour);
+        if (evarray.length === 0) {
+          console.log(evarray);
+          interaction.editReply("NO EV OR NO AVAILABLE LINES");
+          return;
+        }
+        for (let i = 0; i < evarray.length; i++) {
+          embed = new EmbedBuilder().setColor(0x0099ff).setTitle(" ");
+          embed.addFields({
+            name: evarray[i].event_name,
+            value:
+              evarray[i].player_name +
+              " " +
+              evarray[i].market +
+              " " +
+              evarray[i].event_name +
+              " " +
+              evarray[i].round_num +
+              " " +
+              evarray[i].final_odds +
+              " FanDuel",
+          });
+        }
+      } else {
+        interaction.editReply("NO EV OR NO AVAILABLE LINES");
+      }
+    }
+  }
+});
+
+client.on("intreactionCreate", async (interaction) => {
+  if (interaction.isCommand()) {
+    if (interaction.commandName === "matchups") {
+      let markets = ["tournament_matchups", "round_matchups"];
+      let tours = ["pga", "euro", "opp", "alt"];
+      await interaction.deferReply();
+      let embed;
+      const tour = interaction.options.getString("tour");
+      const market = interaction.options.getString("market");
     }
   }
 });

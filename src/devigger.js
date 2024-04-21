@@ -1,3 +1,4 @@
+// import { TextBasedChannelMixin } from "discord.js";
 import { generateDeviggerUrl, arrayToObjectBuilder } from "./querybuilder.js";
 
 const baseUrl =
@@ -125,4 +126,94 @@ async function devigKFT(response, evarray) {
   }
 }
 
-export { devig, devigKFT };
+/**
+ *
+ * @param {import("./datagolf.js").ThreeballResponse} response
+ * @param {*} evarray
+ */
+//FIXME: Finish function
+async function devig3ball(response, evarray) {
+  if (Array.isArray(response.match_list)) {
+    let eventName = response.event_name;
+    let market = response.market;
+    let roundNum = response.round_num;
+    let dgp1 = response.match_list.odds.datagolf.p1;
+    let dgp2 = response.match_list.odds.datagolf.p2;
+    let dgp3 = response.match_list.odds.datagolf.p3;
+    let p1Name = response.match_list.p1_player_name;
+    let p2Name = response.match_list.p2_player_name;
+    let p3Name = response.match_list.p3_player_name;
+    for (let matchup of response.match_list.odds) {
+      if (
+        matchup.odds.hasOwnProperty(fanduel) &&
+        matchup.odds.hasOwnProperty(datagolf)
+      ) {
+        let tBall = matchup;
+        //if FD and DG properties exist, devig and build custom object to add to evarray
+        let list = ["LegOdds", dgp1, "FinalOdds", matchup.fanduel.p1];
+        let queryString =
+          baseUrl + generateDeviggerUrl(arrayToObjectBuilder(...list)) + endUrl;
+        await fetch(queryString)
+          .then((res) => res.json())
+          .then((data) => {
+            console.log(data);
+            tBall.p1_devig = data;
+            if (tBall.p1_devig.Final.EV_Percentage > 0.1) {
+              tBall.player_name = p1Name;
+              tBall.event_name = eventName;
+              tBall.market = market;
+              tBall.round_num = roundNum;
+              tBall.final_odds = matchup.fanduel.p1;
+              tBall.fair_value_odds = matchup.datagolf.p1;
+              tBall.evarray.push(tBall);
+            }
+          })
+          .then(async () => {
+            let list = ["LegOdds", dgp2, "FinalOdds", matchup.fanduel.p2];
+            let queryString =
+              baseUrl +
+              generateDeviggerUrl(arrayToObjectBuilder(...list) + endUrl);
+            return fetch(queryString)
+              .then((res) => res.json())
+              .then((data) => {
+                console.log(data);
+                tBall.p2_devig = data;
+                if (tBall.p2.devig.Final.EV_Percentage > 0.1) {
+                  tBall.player_name = p2Name;
+                  tBall.event_name = eventName;
+                  tBall.market = market;
+                  tBall.round_num = roundNum;
+                  tBall.final_odds = matchup.fanduel.p2;
+                  tBall.fair_value_odds = matchup.datagolf.p2;
+                  evarray.push(tBall);
+                }
+              });
+          })
+          .then(async () => {
+            let list = ["LegOdds", dgp3, "FinalOdds", matchup.fanduel.p3];
+            let queryString =
+              baseUrl +
+              generateDeviggerUrl(arrayToObjectBuilder(...list)) +
+              endUrl;
+            return fetch(queryString)
+              .then((res) => res.json())
+              .then((data) => {
+                console.log(data);
+                tBall.p3_devig = data;
+                if (tBall.p3.devig.Final.EV_Percentage > 0.1) {
+                  tBall.player_name = p3Name;
+                  tBall.event_name = eventName;
+                  tBall.market = market;
+                  tBall.round_num = roundNum;
+                  tBall.final_odds = matchup.fanduel.p3;
+                  tBall.fair_value_odds = matchup.datagolf.p3;
+                  evarray.push(tBall);
+                }
+              });
+          });
+      }
+    }
+  }
+}
+
+export { devig, devigKFT, devig3ball };
