@@ -133,24 +133,26 @@ async function devigKFT(response, evarray) {
  */
 //FIXME: Finish function
 async function devig3ball(response, evarray) {
+  console.log(response);
   if (Array.isArray(response.match_list)) {
     let eventName = response.event_name;
     let market = response.market;
     let roundNum = response.round_num;
-    let dgp1 = response.match_list.odds.datagolf.p1;
-    let dgp2 = response.match_list.odds.datagolf.p2;
-    let dgp3 = response.match_list.odds.datagolf.p3;
     let p1Name = response.match_list.p1_player_name;
     let p2Name = response.match_list.p2_player_name;
     let p3Name = response.match_list.p3_player_name;
-    for (let matchup of response.match_list.odds) {
+    for (let i = 0; i < response.match_list.length; i++) {
       if (
-        matchup.odds.hasOwnProperty(fanduel) &&
-        matchup.odds.hasOwnProperty(datagolf)
+        response.match_list[0].odds.hasOwnProperty("fanduel") &&
+        response.match_list[0].odds.hasOwnProperty("datagolf")
       ) {
-        let tBall = matchup;
+        console.log(response.match_list[i].odds);
+        let dgp1 = datagolf.p1;
+        let dgp2 = datagolf.p2;
+        let dgp3 = datagolf.p3;
+        let tBall = match_list[i];
         //if FD and DG properties exist, devig and build custom object to add to evarray
-        let list = ["LegOdds", dgp1, "FinalOdds", matchup.fanduel.p1];
+        let list = ["LegOdds", dgp1, "FinalOdds", match_list[i].fanduel.p1];
         let queryString =
           baseUrl + generateDeviggerUrl(arrayToObjectBuilder(...list)) + endUrl;
         await fetch(queryString)
@@ -163,13 +165,13 @@ async function devig3ball(response, evarray) {
               tBall.event_name = eventName;
               tBall.market = market;
               tBall.round_num = roundNum;
-              tBall.final_odds = matchup.fanduel.p1;
-              tBall.fair_value_odds = matchup.datagolf.p1;
-              tBall.evarray.push(tBall);
+              tBall.final_odds = match_list[i].fanduel.p1;
+              tBall.fair_value_odds = match_list[i].datagolf.p1;
+              evarray.push(tBall);
             }
           })
           .then(async () => {
-            let list = ["LegOdds", dgp2, "FinalOdds", matchup.fanduel.p2];
+            let list = ["LegOdds", dgp2, "FinalOdds", match_list[i].fanduel.p2];
             let queryString =
               baseUrl +
               generateDeviggerUrl(arrayToObjectBuilder(...list) + endUrl);
@@ -183,14 +185,14 @@ async function devig3ball(response, evarray) {
                   tBall.event_name = eventName;
                   tBall.market = market;
                   tBall.round_num = roundNum;
-                  tBall.final_odds = matchup.fanduel.p2;
-                  tBall.fair_value_odds = matchup.datagolf.p2;
+                  tBall.final_odds = match_list[i].fanduel.p2;
+                  tBall.fair_value_odds = match_list[i].datagolf.p2;
                   evarray.push(tBall);
                 }
               });
           })
           .then(async () => {
-            let list = ["LegOdds", dgp3, "FinalOdds", matchup.fanduel.p3];
+            let list = ["LegOdds", dgp3, "FinalOdds", match_list[i].fanduel.p3];
             let queryString =
               baseUrl +
               generateDeviggerUrl(arrayToObjectBuilder(...list)) +
@@ -205,8 +207,8 @@ async function devig3ball(response, evarray) {
                   tBall.event_name = eventName;
                   tBall.market = market;
                   tBall.round_num = roundNum;
-                  tBall.final_odds = matchup.fanduel.p3;
-                  tBall.fair_value_odds = matchup.datagolf.p3;
+                  tBall.final_odds = match_list[i].fanduel.p3;
+                  tBall.fair_value_odds = match_list[i].datagolf.p3;
                   evarray.push(tBall);
                 }
               });
