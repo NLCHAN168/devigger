@@ -6,6 +6,7 @@ import { findEV, tBallEV } from "./dgfetcher.js";
 
 //TODO: add caching data
 //TODO: cache on startup, call golf command on mondays at 1:30pm est
+//TODO: include last_update in embed
 config();
 const client = new Client({
   intents: ["Guilds", "GuildMessages", "GuildMembers"],
@@ -425,20 +426,99 @@ client.on("interactionCreate", async (interaction) => {
         }
         for (let i = 0; i < evarray.length; i++) {
           embed = new EmbedBuilder().setColor(0x0099ff).setTitle(" ");
-          embed.addFields({
-            name: evarray[i].event_name,
-            value:
-              evarray[i].player_name +
-              " " +
-              evarray[i].market +
-              " " +
-              evarray[i].event_name +
-              " " +
-              evarray[i].round_num +
-              " " +
-              evarray[i].final_odds +
-              " FanDuel",
-          });
+          embed.addFields(
+            {
+              name: evarray[i].event_name,
+              value:
+                evarray[i].player_name +
+                " " +
+                evarray[i].market +
+                " " +
+                evarray[i].round_num +
+                " " +
+                evarray[i].final_odds +
+                " FanDuel",
+            },
+            {
+              name:
+                "```" +
+                "EV: " +
+                Math.round(
+                  evarray[i].devig.Final.EV_Percentage.toFixed(2) * 100
+                ) +
+                "%" +
+                "```",
+              value: " ",
+              inline: true,
+            },
+            {
+              name:
+                "```" +
+                "FV: " +
+                Math.round(evarray[i].devig.Final.FairValue_Odds) +
+                "```",
+              value: " ",
+              inline: true,
+            },
+            {
+              name: "\t",
+              value: "\t",
+            },
+            {
+              name:
+                "```" +
+                "HK : " +
+                (evarray[i].devig.Final.Kelly_Full / 2).toFixed(2) +
+                "```",
+              value: " ",
+              inline: true,
+            },
+            {
+              name:
+                "```" +
+                "QK : " +
+                (evarray[i].devig.Final.Kelly_Full / 4).toFixed(2) +
+                "```",
+              value: " ",
+              inline: true,
+            },
+            {
+              name: "\t",
+              value: "\t",
+            },
+            {
+              name:
+                "```" +
+                "SK : " +
+                (evarray[i].devig.Final.Kelly_Full / 6).toFixed(2) +
+                "```",
+              value: " ",
+              inline: true,
+            },
+            {
+              name:
+                "```" +
+                "EK : " +
+                (evarray[i].devig.Final.Kelly_Full / 8).toFixed(2) +
+                "```",
+              value: " ",
+              inline: true,
+            },
+            {
+              name: "\t",
+              value: "\t",
+            },
+            {
+              name:
+                "```" +
+                "WIN: " +
+                (evarray[i].devig.Final.FairValue * 100).toFixed(2) +
+                "%" +
+                "```",
+              value: " ",
+              inline: true,
+            }
+          );
         }
       } else {
         interaction.editReply("NO EV OR NO AVAILABLE LINES");
