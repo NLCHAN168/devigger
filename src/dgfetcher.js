@@ -1,8 +1,6 @@
 //@ts-check
-
-import { devig, devigKFT } from "./devigger.js";
-import { outrightOdds } from "./datagolf.js";
-import { generateDeviggerUrl, arrayToObjectBuilder } from "./querybuilder.js";
+import { devig, devigKFT, devig3ball } from "./devigger.js";
+import { outrightOdds, tBallOdds } from "./datagolf.js";
 import { config } from "dotenv";
 
 config();
@@ -12,7 +10,6 @@ config();
 //devig, push plays above ev threshold to winev array
 //output array to discord
 //add check statement to only devig if anything changed
-//FIXME: Test functionality for all tours (KFT broken)
 async function findEV(tour, market) {
   let evarray = [];
   let list = ["tour", tour, "market", market];
@@ -22,4 +19,12 @@ async function findEV(tour, market) {
   } else await devig(dgresponse, evarray);
   return evarray;
 }
-export { findEV };
+
+async function tBallEV(tour) {
+  let evarray = [];
+  let list = ["tour", tour, "market", "3_balls"];
+  let dgresponse = await tBallOdds(list);
+  await devig3ball(dgresponse, evarray);
+  return evarray;
+}
+export { findEV, tBallEV };

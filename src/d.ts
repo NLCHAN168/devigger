@@ -8,7 +8,37 @@ interface OddsEntry extends Record<BookOffering, string> {
 	};
 	player_name?: string;
 }
- 
+
+interface Threeball {
+		p1: number;
+		p2: number;
+		p3: number;
+}
+
+interface ThreeballOddsEntry {
+	odds: {	
+		bet_365?: { type: Threeball }
+		bovada?: { type: Threeball }
+		datagolf: { type: Threeball }
+		draftkings?: { type: Threeball }
+		fanduel?: { type: Threeball }
+	}
+	p1_dg_id: number;
+	p1_player_name: string;
+	p2_dg_id: number;
+	p2_player_name: string;
+	p3_dg_id: number;
+	p3_player_name: string;
+	ties: string;
+}
+
+export interface ThreeballResponse {
+	event_name: string;
+	last_updated: string;
+	market: string;
+	round_num: number;
+	match_list?: string | ThreeballOddsEntry[];
+}
 
 export interface DatagolfResponse {
 	books_offering?: BookOffering[];

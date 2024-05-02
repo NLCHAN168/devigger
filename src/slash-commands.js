@@ -40,7 +40,7 @@ const slashRegister = async () => {
           ),
         new SlashCommandBuilder()
           .setName("golflist")
-          .setDescription("populate golf list (PGA/Euro/KFT/opp/alt)")
+          .setDescription("Calculate EV from PGA/Euro/KFT/opp/alt outrights")
           .addStringOption((option) =>
             option.setName("tour").setDescription("tour name").setRequired(true)
           )
@@ -50,6 +50,30 @@ const slashRegister = async () => {
               .setDescription(
                 "market name: win/top_5/top_10/top_20/mc/make_cut/frl"
               )
+              .setRequired(true)
+          ),
+        new SlashCommandBuilder()
+          .setName("threeballs")
+          .setDescription("Calculate EV of 3 balls")
+          .addStringOption((option) =>
+            option
+              .setName("tour")
+              .setDescription("tour name - pga, euro, opp, alt")
+              .setRequired(true)
+          ),
+        new SlashCommandBuilder()
+          .setName("matchups")
+          .setDescription("Calculate EV of matchups")
+          .addStringOption((option) =>
+            option
+              .setName("tour")
+              .setDescription("tour name - pga, euro, opp, alt")
+              .setRequired(true)
+          )
+          .addStringOption((option) =>
+            option
+              .setName("market")
+              .setDescription("tournament_matchups, round_matchups")
               .setRequired(true)
           ),
       ],

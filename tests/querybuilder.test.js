@@ -25,7 +25,6 @@ describe("array of key values to objects", () => {
   });
 });
 
-//TODO: Add failure cases and come up with error handling
 describe("url generator", () => {
   it("generates the correct query parameters for a url", () => {
     let queryParamsArray = ["Legodds", "-110/-110", "FinalOdds", "110"];
