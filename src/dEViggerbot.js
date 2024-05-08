@@ -202,14 +202,19 @@ client.on("interactionCreate", async (interaction) => {
       let embed;
       const tour = interaction.options.getString("tour");
       const market = interaction.options.getString("market");
+      let evthreshold = 0.1;
+      if (Number.isFinite(interaction.options.getNumber("ev"))) {
+        evthreshold = interaction.options.getNumber("ev");
+      }
       if (
-        (tour.toLowerCase() === "kft" && market.toLowerCase() !== "win") ||
-        (tour.toLowerCase() === "kft" && market.toLowerCase() !== "top_5")
+        (tour.toLowerCase() === "kft" && market.toLowerCase() === "top_10") ||
+        (tour.toLowerCase() === "kft" && market.toLowerCase() === "top_20")
       ) {
         interaction.editReply("No available Massachusetts lines");
+        return;
       }
       if (tours.includes(tour) && markets.includes(market)) {
-        let evarray = await findEV(tour, market);
+        let evarray = await findEV(tour, market, evthreshold);
         if (evarray.length === 0) {
           interaction.editReply("NO EV");
           return;
@@ -226,7 +231,10 @@ client.on("interactionCreate", async (interaction) => {
                   evarray[i].market +
                   " " +
                   evarray[i].fanduel +
-                  " FanDuel",
+                  " FanDuel " +
+                  "\n" +
+                  "Last update: " +
+                  evarray[i].lastUpdate,
               },
               {
                 name:
@@ -318,7 +326,10 @@ client.on("interactionCreate", async (interaction) => {
                   evarray[i].market +
                   " " +
                   evarray[i].draftkings +
-                  " DraftKings",
+                  " DraftKings " +
+                  "\n" +
+                  "Last update: " +
+                  evarray[i].lastUpdate,
               },
               {
                 name:
@@ -437,7 +448,10 @@ client.on("interactionCreate", async (interaction) => {
                 evarray[i].round_num +
                 " " +
                 evarray[i].final_odds +
-                " FanDuel",
+                " FanDuel " +
+                "\n" +
+                "Last update: " +
+                evarray[i].lastUpdate,
             },
             {
               name:

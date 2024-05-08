@@ -51,6 +51,9 @@ const slashRegister = async () => {
                 "market name: win/top_5/top_10/top_20/mc/make_cut/frl"
               )
               .setRequired(true)
+          )
+          .addNumberOption((option) =>
+            option.setName("ev").setDescription("EV Percentage in decimal")
           ),
         new SlashCommandBuilder()
           .setName("threeballs")
@@ -75,6 +78,9 @@ const slashRegister = async () => {
               .setName("market")
               .setDescription("tournament_matchups, round_matchups")
               .setRequired(true)
+          )
+          .addNumberOption((option) =>
+            option.setName("ev").setDescription("EV Percentage in decimal")
           ),
       ],
     });

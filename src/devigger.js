@@ -6,7 +6,7 @@ const baseUrl =
 const endUrl = "DevigMethod=4&Args=ev_p,fo_o,kelly,dm";
 
 //devig all objects inside array.odds
-async function devig(response, evarray) {
+async function devig(response, evarray, evthreshold) {
   //calls devig for golfer if odds exist for FD
   for (let golfer of response.odds) {
     golfer.event_name = response.event_name;
@@ -30,9 +30,10 @@ async function devig(response, evarray) {
           golfer.devig = data;
           golfer.event_name = response.event_name;
           golfer.market = response.market;
+          golfer.lastUpdate = response.last_updated;
           //assess EV, if above threshold, push to evarray
           if (
-            golfer.devig.Final.EV_Percentage > 0.1 &&
+            golfer.devig.Final.EV_Percentage > evthreshold &&
             golfer.pinged !== true
           ) {
             evarray.push(golfer);
@@ -50,7 +51,7 @@ async function devig(response, evarray) {
   }
 }
 
-async function devigKFT(response, evarray) {
+async function devigKFT(response, evarray, evthreshold) {
   for (let golfer of response.odds) {
     golfer.event_name = response.event_name;
     golfer.market = response.market;
@@ -70,9 +71,10 @@ async function devigKFT(response, evarray) {
           console.log(data);
           golfer.devig = data;
           golfer.event_name = response.event_name;
+          golfer.lastUpdate = response.last_updated;
           golfer.market = response.market;
           if (
-            golfer.devig.Final.EV_Percentage > 0.1 &&
+            golfer.devig.Final.EV_Percentage > evthreshold &&
             golfer.pinged !== true
           ) {
             evarray.push(golfer);
@@ -106,9 +108,10 @@ async function devigKFT(response, evarray) {
           console.log(data);
           golfer.devig = data;
           golfer.event_name = response.event_name;
+          golfer.lastUpdate = response.last_updated;
           golfer.market = response.market;
           if (
-            golfer.devig.Final.EV_Percentage > 0.1 &&
+            golfer.devig.Final.EV_Percentage > evthreshold &&
             golfer.pinged !== true
           ) {
             evarray.push(golfer);
@@ -133,12 +136,13 @@ async function devigKFT(response, evarray) {
  */
 //FIXME: Finish function
 //TODO: Test function using 3ball.json
-async function devig3ball(response, evarray) {
+async function devig3ball(response, evarray, evthreshold) {
   // console.log(response);
   if (Array.isArray(response.match_list)) {
     let eventName = response.event_name;
     let market = response.market;
     let roundNum = response.round_num;
+    let lastUpdate = response.last_updated;
     let p1Name = response.match_list.p1_player_name;
     let p2Name = response.match_list.p2_player_name;
     let p3Name = response.match_list.p3_player_name;
@@ -168,10 +172,11 @@ async function devig3ball(response, evarray) {
           .then((data) => {
             console.log(data);
             tBall.p1_devig = data;
-            if (tBall.p1_devig.Final.EV_Percentage > 0.1) {
+            if (tBall.p1_devig.Final.EV_Percentage > evthreshold) {
               tBall.player_name = p1Name;
               tBall.event_name = eventName;
               tBall.market = market;
+              tBall.lastUpdate = lastUpdate;
               tBall.round_num = roundNum;
               tBall.final_odds = match_list[i].fanduel.p1;
               tBall.fair_value_odds = match_list[i].datagolf.p1;
@@ -195,9 +200,10 @@ async function devig3ball(response, evarray) {
               .then((data) => {
                 console.log(data);
                 tBall.p2_devig = data;
-                if (tBall.p2_devig.Final.EV_Percentage > 0.1) {
+                if (tBall.p2_devig.Final.EV_Percentage > evthreshold) {
                   tBall.player_name = p2Name;
                   tBall.event_name = eventName;
+                  tBall.lastUpdate = lastUpdate;
                   tBall.market = market;
                   tBall.round_num = roundNum;
                   tBall.final_odds = response.match_list[i].fanduel.p2;
@@ -224,9 +230,10 @@ async function devig3ball(response, evarray) {
               .then((data) => {
                 // console.log(data);
                 tBall.p3_devig = data;
-                if (tBall.p3_devig.Final.EV_Percentage > 0.1) {
+                if (tBall.p3_devig.Final.EV_Percentage > evthreshold) {
                   tBall.player_name = p3Name;
                   tBall.event_name = eventName;
+                  tBall.date = lastUpdate;
                   tBall.market = market;
                   tBall.round_num = roundNum;
                   tBall.final_odds = response.match_list[i].fanduel.p3;
