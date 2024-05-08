@@ -143,10 +143,10 @@ async function devig3ball(response, evarray, evthreshold) {
     let market = response.market;
     let roundNum = response.round_num;
     let lastUpdate = response.last_updated;
-    let p1Name = response.match_list.p1_player_name;
-    let p2Name = response.match_list.p2_player_name;
-    let p3Name = response.match_list.p3_player_name;
     for (let i = 0; i < response.match_list.length; i++) {
+      let p1Name = response.match_list[i].p1_player_name;
+      let p2Name = response.match_list[i].p2_player_name;
+      let p3Name = response.match_list[i].p3_player_name;
       if (
         response.match_list[i].odds.hasOwnProperty("fanduel") &&
         response.match_list[i].odds.hasOwnProperty("datagolf")
@@ -178,8 +178,8 @@ async function devig3ball(response, evarray, evthreshold) {
               tBall.market = market;
               tBall.lastUpdate = lastUpdate;
               tBall.round_num = roundNum;
-              tBall.final_odds = match_list[i].fanduel.p1;
-              tBall.fair_value_odds = match_list[i].datagolf.p1;
+              tBall.final_odds = response.match_list[i].odds.fanduel.p1;
+              tBall.fair_value_odds = response.match_list[i].odds.datagolf.p1;
               tBall.devig = data;
               evarray.push(tBall);
             }
@@ -206,8 +206,9 @@ async function devig3ball(response, evarray, evthreshold) {
                   tBall.lastUpdate = lastUpdate;
                   tBall.market = market;
                   tBall.round_num = roundNum;
-                  tBall.final_odds = response.match_list[i].fanduel.p2;
-                  tBall.fair_value_odds = response.match_list[i].datagolf.p2;
+                  tBall.final_odds = response.match_list[i].odds.fanduel.p2;
+                  tBall.fair_value_odds =
+                    response.match_list[i].odds.datagolf.p2;
                   tBall.devig = data;
                   evarray.push(tBall);
                 }
@@ -236,8 +237,9 @@ async function devig3ball(response, evarray, evthreshold) {
                   tBall.date = lastUpdate;
                   tBall.market = market;
                   tBall.round_num = roundNum;
-                  tBall.final_odds = response.match_list[i].fanduel.p3;
-                  tBall.fair_value_odds = response.match_list[i].datagolf.p3;
+                  tBall.final_odds = response.match_list[i].odds.fanduel.p3;
+                  tBall.fair_value_odds =
+                    response.match_list[i].odds.datagolf.p3;
                   tBall.devig = data;
                   evarray.push(tBall);
                 }

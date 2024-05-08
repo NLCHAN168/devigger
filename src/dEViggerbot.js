@@ -428,8 +428,12 @@ client.on("interactionCreate", async (interaction) => {
       await interaction.deferReply();
       let embed;
       const tour = interaction.options.getString("tour");
+      let evthreshold = 0.1;
+      if (Number.isFinite(interaction.options.getNumber("ev"))) {
+        evthreshold = interaction.options.getNumber("ev");
+      }
       if (tours.includes(tour.toLowerCase())) {
-        let evarray = await tBallEV(tour);
+        let evarray = await tBallEV(tour, evthreshold);
         if (evarray.length === 0) {
           console.log(evarray);
           interaction.editReply("NO EV OR NO AVAILABLE LINES");
@@ -533,6 +537,7 @@ client.on("interactionCreate", async (interaction) => {
               inline: true,
             }
           );
+          interaction.followUp({ embeds: [embed] });
         }
       } else {
         interaction.editReply("NO EV OR NO AVAILABLE LINES");
