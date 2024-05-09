@@ -449,6 +449,7 @@ client.on("interactionCreate", async (interaction) => {
                 " " +
                 evarray[i].market +
                 " " +
+                "Round " +
                 evarray[i].round_num +
                 " " +
                 evarray[i].final_odds +

@@ -232,7 +232,7 @@ async function devig3ball(response, evarray, evthreshold) {
                 if (tBall.p3_devig.Final.EV_Percentage > evthreshold) {
                   tBall.player_name = p3Name;
                   tBall.event_name = eventName;
-                  tBall.date = lastUpdate;
+                  tBall.lastUpdate = lastUpdate;
                   tBall.market = market;
                   tBall.round_num = roundNum;
                   tBall.final_odds = response.match_list[i].odds.fanduel.p3;
