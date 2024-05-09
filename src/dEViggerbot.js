@@ -6,7 +6,7 @@ import { findEV, tBallEV } from "./dgfetcher.js";
 
 //TODO: add caching data
 //TODO: cache on startup, call golf command on mondays at 1:30pm est
-//TODO: include last_update in embed
+//TODO: Add tour schedule function to know which tours to devig
 config();
 const client = new Client({
   intents: ["Guilds", "GuildMessages", "GuildMembers"],

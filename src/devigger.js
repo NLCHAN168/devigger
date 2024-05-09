@@ -134,8 +134,6 @@ async function devigKFT(response, evarray, evthreshold) {
  * @param {import("./datagolf.js").ThreeballResponse} response
  * @param {*} evarray
  */
-//FIXME: Finish function
-//TODO: Test function using 3ball.json
 async function devig3ball(response, evarray, evthreshold) {
   // console.log(response);
   if (Array.isArray(response.match_list)) {
