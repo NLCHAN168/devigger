@@ -63,6 +63,9 @@ const slashRegister = async () => {
               .setName("tour")
               .setDescription("tour name - pga, euro, opp, alt")
               .setRequired(true)
+          )
+          .addNumberOption((option) =>
+            option.setName("ev").setDescription("EV Percentage in decimal")
           ),
         new SlashCommandBuilder()
           .setName("matchups")
