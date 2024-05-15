@@ -35,6 +35,16 @@ export const tBallOdds = async (list) => {
   });
 };
 
+export const muOdds = async (list) => {
+  const baseUrl = "https://feeds.datagolf.com/betting-tools/matchups?";
+  const endUrl = `&odds_format=american&file_format=json&key=${process.env.DG_TOKEN}`;
+  const queryString =
+    baseUrl + generateDeviggerUrl(arrayToObjectBuilder(...list)) + endUrl;
+  return fetch(queryString).then((res) => {
+    return res.json;
+  });
+};
+
 export const allPairings = async (list) => {
   const baseUrl =
     "https://feeds.datagolf.com/betting-tools/matchups-all-pairings?";
@@ -46,4 +56,15 @@ export const allPairings = async (list) => {
   });
 };
 
-// allPairings(list);
+/**
+ *
+ * @param {*} list
+ * @returns {Promise<ScheduleResponse>}
+ */
+export const schedule = async (list) => {
+  return await fetch(
+    `https://feeds.datagolf.com/get-schedule?tour=${list}&file_format=json&key=${process.env.DG_TOKEN}`
+  ).then((res) => {
+    return res.json();
+  });
+};

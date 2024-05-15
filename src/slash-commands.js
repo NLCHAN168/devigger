@@ -85,6 +85,18 @@ const slashRegister = async () => {
           .addNumberOption((option) =>
             option.setName("ev").setDescription("EV Percentage in decimal")
           ),
+        new SlashCommandBuilder()
+          .setName("schedule")
+          .setDescription(
+            "Lists all golf tournaments for the year - default all"
+          )
+          .addStringOption((option) => {
+            option
+              .setName("tour")
+              .setDescription(
+                "Schedule for specific tour - all (default), pga, euro, kft, alt (or liv)"
+              );
+          }),
       ],
     });
   } catch (error) {

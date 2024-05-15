@@ -1,4 +1,5 @@
 type BookOffering = "bet365" | "betfair" | "betmgm" | "betway" | "bovada" | "caesars" | "draftkings" | "fanduel" | "pointsbet" | "unibet" | "williamhill";
+type MatchupBooks = BookOffering | "datagolf" 
 
 interface OddsEntry extends Record<BookOffering, string> {
 	dg_id?: number;
@@ -7,6 +8,40 @@ interface OddsEntry extends Record<BookOffering, string> {
 		baseline_history_fit?: string;
 	};
 	player_name?: string;
+}
+
+interface MatchupTieEntry {
+	odds: {
+		bet365: {
+			p1: number;
+			p2: number;
+			tie: number;
+		},
+		datagolf: {
+			p1: number;
+			p2: number;
+			tie: number;
+		}
+	},
+	p1_dg_id: number;
+	p1_player_name: string;
+	p2_dg_id: number;
+	p2_player_name: string;
+	ties: string;
+}
+
+interface MatchupEntry extends Record<MatchupBooks, {p1:string, p2: string}> {
+	odds: {
+		MatchupBooks?: {
+			p1: string;
+			p2: string;
+		}
+	},
+	p1_dg_id: number;
+	p1_player_name: string;
+	p2_dg_id: number;
+	p2_player_name: string;
+	ties: string;
 }
 
 interface Threeball {
@@ -30,6 +65,32 @@ interface ThreeballOddsEntry {
 	p3_dg_id: number;
 	p3_player_name: string;
 	ties: string;
+}
+
+interface TourEntry {
+	course: string;
+	course_key: string;
+	event_id: number;
+	event_name: string;
+	latitude: number;
+	location: string;
+	longitude: number;
+	start_date: string;
+	tour?: string;
+}
+
+export interface ScheduleResponse {
+	current_season: string;
+	schedule: TourEntry[];
+	tour: string;
+}
+
+
+export interface MatchUpResponse {
+	event_name: string;
+	last_updated: string;
+	market: string;
+	match_list?: string | MatchupEntry[] | MatchupTieEntry[] ;
 }
 
 export interface ThreeballResponse {

@@ -2,6 +2,7 @@ import { config } from "dotenv";
 import { Client, Embed, EmbedBuilder } from "discord.js";
 import { generateDeviggerUrl, arrayToObjectBuilder } from "./querybuilder.js";
 import { findEV, tBallEV } from "./dgfetcher.js";
+import { schedule } from "./datagolf.js";
 // import { tBallOdds } from "./datagolf.js";
 
 //TODO: add caching data
@@ -556,6 +557,30 @@ client.on("intreactionCreate", async (interaction) => {
       let embed;
       const tour = interaction.options.getString("tour");
       const market = interaction.options.getString("market");
+      let evthreshold = 0.1;
+      await interaction.deferReply();
+      if (Number.isFinite(interaction.options.getNumber("ev"))) {
+        evthreshold = interaction.options.getNumber("ev");
+      }
+    }
+  }
+});
+
+//TODO: finish schedule function
+client.on("interactionCreate", async (interaction) => {
+  if (interaction.isCommand()) {
+    if (interaction.commandName === "schedule") {
+      let list = ["all", "pga", "euro", "kft", "alt"];
+      if (list.includes(interaction.getString("tour").toLowerCase())) {
+        list = interaction.getString("tour");
+      } else {
+        list = "all";
+      }
+      /**
+       *@param {string} list
+       * @return {import("./datagolf.js").ScheduleResponse}
+       */
+      let response = await schedule(list);
     }
   }
 });

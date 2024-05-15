@@ -248,4 +248,6 @@ async function devig3ball(response, evarray, evthreshold) {
   }
 }
 
-export { devig, devigKFT, devig3ball };
+//TODO: finish matchup devig function
+async function devigMU(response, evarray, evthreshold) {}
+export { devig, devigKFT, devig3ball, devigMU };
