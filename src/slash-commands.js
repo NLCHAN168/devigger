@@ -42,13 +42,29 @@ const slashRegister = async () => {
           .setName("golflist")
           .setDescription("Calculate EV from PGA/Euro/KFT/opp/alt outrights")
           .addStringOption((option) =>
-            option.setName("tour").setDescription("tour name").setRequired(true)
+            option
+              .setName("tour")
+              .setDescription("tour name")
+              .setRequired(true)
+              .setChoices(
+                { name: "PGA", value: "pga" },
+                { name: "Euro", value: "euro" },
+                { name: "KFT", value: "kft" },
+                { name: "Opp", value: "opp" },
+                { name: "Alt", value: "liv" }
+              )
           )
           .addStringOption((option) =>
             option
               .setName("market")
               .setDescription(
                 "market name: win/top_5/top_10/top_20/mc/make_cut/frl"
+              )
+              .setChoices(
+                { name: "win", value: "win" },
+                { name: "top 5", value: "top_5" },
+                { name: "top 10", value: "top_10" },
+                { name: "top 20", value: "top_20" }
               )
               .setRequired(true)
           )
@@ -62,6 +78,12 @@ const slashRegister = async () => {
             option
               .setName("tour")
               .setDescription("tour name - pga, euro, opp, alt")
+              .setChoices(
+                { name: "PGA", value: "pga" },
+                { name: "Euro", value: "euro" },
+                { name: "KFT", value: "kft" },
+                { name: "Alt", value: "liv" }
+              )
               .setRequired(true)
           )
           .addNumberOption((option) =>
