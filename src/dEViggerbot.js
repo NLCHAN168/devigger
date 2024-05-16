@@ -570,17 +570,57 @@ client.on("intreactionCreate", async (interaction) => {
 client.on("interactionCreate", async (interaction) => {
   if (interaction.isCommand()) {
     if (interaction.commandName === "schedule") {
-      let list = ["all", "pga", "euro", "kft", "alt"];
-      if (list.includes(interaction.getString("tour").toLowerCase())) {
-        list = interaction.getString("tour");
-      } else {
-        list = "all";
-      }
+      await interaction.deferReply();
+      let today = new Date();
+      let thisyear = today.getFullYear();
+      let thismonth = today.getMonth();
+      let thisday = today.getDate();
+      let list = interaction.options.getString("tour");
       /**
        *@param {string} list
        * @return {import("./datagolf.js").ScheduleResponse}
        */
       let response = await schedule(list);
+      let embed;
+      for (let i = 0; i < response.schedule.length; i++) {
+        let tourdate = new Date(response.schedule[i].start_date);
+        let touryear = tourdate.getFullYear();
+        let tourmonth = tourdate.getMonth();
+        let tourday = tourdate.getDate();
+        if (
+          touryear >= thisyear &&
+          tourmonth >= thismonth &&
+          tourday >= thisday
+        ) {
+          if (response.schedule[i].hasOwnProperty("tour")) {
+            embed = new EmbedBuilder().setColor(0x0099ff).setTitle(" ");
+            embed.addFields(
+              {
+                name: "Event Name: " + response.schedule[i].event_name,
+                value: "Course: " + response.schedule[i].course,
+              },
+              {
+                name: "Start Date: " + response.schedule[i].start_date,
+                value: "Tour: " + response.schedule[i].tour,
+              }
+            );
+            interaction.followUp({ embeds: [embed] });
+          } else {
+            embed = new EmbedBuilder().setColor(0x0099ff).setTitle(" ");
+            embed.addFields(
+              {
+                name: response.schedule[i].event_name,
+                value: response.schedule[i].course,
+              },
+              {
+                name: response.schedule[i].start_date,
+                value: response.tour,
+              }
+            );
+            interaction.followUp({ embeds: [embed] });
+          }
+        }
+      }
     }
   }
 });

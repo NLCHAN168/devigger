@@ -90,13 +90,19 @@ const slashRegister = async () => {
           .setDescription(
             "Lists all golf tournaments for the year - default all"
           )
-          .addStringOption((option) => {
+          .addStringOption((option) =>
             option
               .setName("tour")
-              .setDescription(
-                "Schedule for specific tour - all (default), pga, euro, kft, alt (or liv)"
-              );
-          }),
+              .setDescription("Tournament")
+              .setRequired(true)
+              .addChoices(
+                { name: "All", value: "all" },
+                { name: "PGA", value: "pga" },
+                { name: "Euro", value: "euro" },
+                { name: "KFT", value: "kft" },
+                { name: "Alt", value: "liv" }
+              )
+          ),
       ],
     });
   } catch (error) {
