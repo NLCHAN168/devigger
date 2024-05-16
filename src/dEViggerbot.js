@@ -574,7 +574,6 @@ client.on("interactionCreate", async (interaction) => {
       let today = new Date();
       let thisyear = today.getFullYear();
       let thismonth = today.getMonth();
-      let thisday = today.getDate();
       let list = interaction.options.getString("tour");
       /**
        *@param {string} list
@@ -586,12 +585,7 @@ client.on("interactionCreate", async (interaction) => {
         let tourdate = new Date(response.schedule[i].start_date);
         let touryear = tourdate.getFullYear();
         let tourmonth = tourdate.getMonth();
-        let tourday = tourdate.getDate();
-        if (
-          touryear >= thisyear &&
-          tourmonth >= thismonth &&
-          tourday >= thisday
-        ) {
+        if (touryear >= thisyear && tourmonth >= thismonth) {
           if (response.schedule[i].hasOwnProperty("tour")) {
             embed = new EmbedBuilder().setColor(0x0099ff).setTitle(" ");
             embed.addFields(
