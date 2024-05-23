@@ -254,7 +254,6 @@ async function devig3ball(response, evarray, evthreshold) {
   }
 }
 
-//TODO: finish matchup devig function
 /**
  *
  * @param {import("./d.js").MatchUpResponse} response

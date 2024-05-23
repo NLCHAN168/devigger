@@ -1,13 +1,11 @@
 import { config } from "dotenv";
-import { Client, Embed, EmbedBuilder } from "discord.js";
+import { Client, EmbedBuilder } from "discord.js";
 import { generateDeviggerUrl, arrayToObjectBuilder } from "./querybuilder.js";
 import { findEV, muEV, tBallEV } from "./dgfetcher.js";
 import { schedule } from "./datagolf.js";
-// import { tBallOdds } from "./datagolf.js";
 
 //TODO: add caching data
 //TODO: cache on startup, call golf command on mondays at 1:30pm est
-//TODO: Add tour schedule function to know which tours to devig
 config();
 const client = new Client({
   intents: ["Guilds", "GuildMessages", "GuildMembers"],
@@ -225,14 +223,15 @@ client.on("interactionCreate", async (interaction) => {
           if (evarray[i].hasOwnProperty("fanduel")) {
             embed.addFields(
               {
-                name: evarray[i].event_name,
                 value:
                   evarray[i].player_name +
                   " " +
                   evarray[i].market +
                   " " +
                   evarray[i].fanduel +
-                  " FanDuel " +
+                  " FanDuel ",
+                value:
+                  evarray[i].event_name +
                   "\n" +
                   "Last update: " +
                   evarray[i].lastUpdate,
@@ -320,14 +319,15 @@ client.on("interactionCreate", async (interaction) => {
           } else {
             embed.addFields(
               {
-                name: evarray[i].event_name,
-                value:
+                name:
                   evarray[i].player_name +
                   " " +
                   evarray[i].market +
                   " " +
                   evarray[i].draftkings +
-                  " DraftKings " +
+                  " DraftKings ",
+                value:
+                  evarray[i].event_name +
                   "\n" +
                   "Last update: " +
                   evarray[i].lastUpdate,
@@ -442,8 +442,7 @@ client.on("interactionCreate", async (interaction) => {
         embed = new EmbedBuilder().setColor(0x0099ff).setTitle(" ");
         embed.addFields(
           {
-            name: evarray[i].event_name,
-            value:
+            name:
               evarray[i].player_name +
               " " +
               evarray[i].market +
@@ -452,7 +451,9 @@ client.on("interactionCreate", async (interaction) => {
               evarray[i].round_num +
               " " +
               evarray[i].final_odds +
-              " FanDuel " +
+              " FanDuel ",
+            value:
+              evarray[i].event_name +
               "\n" +
               "Last update: " +
               evarray[i].lastUpdate,
