@@ -1,7 +1,7 @@
 import { config } from "dotenv";
 import { Client, Embed, EmbedBuilder } from "discord.js";
 import { generateDeviggerUrl, arrayToObjectBuilder } from "./querybuilder.js";
-import { findEV, tBallEV } from "./dgfetcher.js";
+import { findEV, muEV, tBallEV } from "./dgfetcher.js";
 import { schedule } from "./datagolf.js";
 // import { tBallOdds } from "./datagolf.js";
 
@@ -543,25 +543,214 @@ client.on("interactionCreate", async (interaction) => {
   }
 });
 
-client.on("intreactionCreate", async (interaction) => {
+client.on("interactionCreate", async (interaction) => {
   if (interaction.isCommand()) {
     if (interaction.commandName === "matchups") {
-      let markets = ["tournament_matchups", "round_matchups"];
-      let tours = ["pga", "euro", "opp", "alt"];
       await interaction.deferReply();
       let embed;
       const tour = interaction.options.getString("tour");
       const market = interaction.options.getString("market");
       let evthreshold = 0.1;
-      await interaction.deferReply();
       if (Number.isFinite(interaction.options.getNumber("ev"))) {
         evthreshold = interaction.options.getNumber("ev");
+      }
+      let evarray = await muEV(tour, market, evthreshold);
+      if (evarray.length === 0) {
+        console.log(evarray);
+        interaction.editReply("NO EV OR NO AVAILABLE LINES");
+        return;
+      }
+      for (let i = 0; i < evarray.length; i++) {
+        if (evarray[i].round_num) {
+          embed = new EmbedBuilder().setColor(0x0099ff).setTitle(" ");
+          embed.addFields(
+            {
+              name: evarray[i].market,
+              value: "Round " + evarray[i].round_num,
+            },
+            {
+              value: evarray[i].event_name,
+              name: evarray[i].lastUpdate,
+            },
+            {
+              name:
+                "```" +
+                "EV: " +
+                Math.round(
+                  evarray[i].devig.Final.EV_Percentage.toFixed(2) * 100
+                ) +
+                "%" +
+                "```",
+              value: " ",
+              inline: true,
+            },
+            {
+              name:
+                "```" +
+                "FV: " +
+                Math.round(evarray[i].devig.Final.FairValue_Odds) +
+                "```",
+              value: " ",
+              inline: true,
+            },
+            {
+              name: "\t",
+              value: "\t",
+            },
+            {
+              name:
+                "```" +
+                "HK : " +
+                (evarray[i].devig.Final.Kelly_Full / 2).toFixed(2) +
+                "```",
+              value: " ",
+              inline: true,
+            },
+            {
+              name:
+                "```" +
+                "QK : " +
+                (evarray[i].devig.Final.Kelly_Full / 4).toFixed(2) +
+                "```",
+              value: " ",
+              inline: true,
+            },
+            {
+              name: "\t",
+              value: "\t",
+            },
+            {
+              name:
+                "```" +
+                "SK : " +
+                (evarray[i].devig.Final.Kelly_Full / 6).toFixed(2) +
+                "```",
+              value: " ",
+              inline: true,
+            },
+            {
+              name:
+                "```" +
+                "EK : " +
+                (evarray[i].devig.Final.Kelly_Full / 8).toFixed(2) +
+                "```",
+              value: " ",
+              inline: true,
+            },
+            {
+              name: "\t",
+              value: "\t",
+            },
+            {
+              name:
+                "```" +
+                "WIN: " +
+                (evarray[i].devig.Final.FairValue * 100).toFixed(2) +
+                "%" +
+                "```",
+              value: " ",
+              inline: true,
+            }
+          );
+          interaction.followUp({ embeds: [embed] });
+        } else {
+          embed = new EmbedBuilder().setColor(0x0099ff).setTitle(" ");
+          embed.addFields(
+            {
+              name: evarray[i].market,
+              value: "72-round Matchup",
+            },
+            {
+              name: evarray[i].event_name,
+              value: "Last updated: " + evarray[i].lastUpdate,
+            },
+            {
+              name:
+                "```" +
+                "EV: " +
+                Math.round(
+                  evarray[i].devig.Final.EV_Percentage.toFixed(2) * 100
+                ) +
+                "%" +
+                "```",
+              value: " ",
+              inline: true,
+            },
+            {
+              name:
+                "```" +
+                "FV: " +
+                Math.round(evarray[i].devig.Final.FairValue_Odds) +
+                "```",
+              value: " ",
+              inline: true,
+            },
+            {
+              name: "\t",
+              value: "\t",
+            },
+            {
+              name:
+                "```" +
+                "HK : " +
+                (evarray[i].devig.Final.Kelly_Full / 2).toFixed(2) +
+                "```",
+              value: " ",
+              inline: true,
+            },
+            {
+              name:
+                "```" +
+                "QK : " +
+                (evarray[i].devig.Final.Kelly_Full / 4).toFixed(2) +
+                "```",
+              value: " ",
+              inline: true,
+            },
+            {
+              name: "\t",
+              value: "\t",
+            },
+            {
+              name:
+                "```" +
+                "SK : " +
+                (evarray[i].devig.Final.Kelly_Full / 6).toFixed(2) +
+                "```",
+              value: " ",
+              inline: true,
+            },
+            {
+              name:
+                "```" +
+                "EK : " +
+                (evarray[i].devig.Final.Kelly_Full / 8).toFixed(2) +
+                "```",
+              value: " ",
+              inline: true,
+            },
+            {
+              name: "\t",
+              value: "\t",
+            },
+            {
+              name:
+                "```" +
+                "WIN: " +
+                (evarray[i].devig.Final.FairValue * 100).toFixed(2) +
+                "%" +
+                "```",
+              value: " ",
+              inline: true,
+            }
+          );
+          interaction.followUp({ embeds: [embed] });
+        }
       }
     }
   }
 });
 
-//TODO: finish schedule function
 client.on("interactionCreate", async (interaction) => {
   if (interaction.isCommand()) {
     if (interaction.commandName === "schedule") {

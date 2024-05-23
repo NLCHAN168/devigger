@@ -2,7 +2,8 @@ import { config } from "dotenv";
 import { generateDeviggerUrl, arrayToObjectBuilder } from "./querybuilder.js";
 /** @typedef {import('./d.ts').DatagolfResponse} DatagolfResponse*/
 /** @typedef {import('./d.ts').ThreeballResponse} ThreeballResponse */
-/**@typedef {import('./d.ts').ScheduleResponse} ScheduleResponse */
+/** @typedef {import('./d.ts').ScheduleResponse} ScheduleResponse */
+/** @typedef {import('./d.ts').MatchUpResponse} MatchUpResponse */
 config();
 
 /**
@@ -35,13 +36,18 @@ export const tBallOdds = async (list) => {
   });
 };
 
+/**
+ *
+ * @param {*} list
+ * @returns {Promise<MatchUpResponse>}
+ */
 export const muOdds = async (list) => {
   const baseUrl = "https://feeds.datagolf.com/betting-tools/matchups?";
   const endUrl = `&odds_format=american&file_format=json&key=${process.env.DG_TOKEN}`;
   const queryString =
     baseUrl + generateDeviggerUrl(arrayToObjectBuilder(...list)) + endUrl;
   return fetch(queryString).then((res) => {
-    return res.json;
+    return res.json();
   });
 };
 

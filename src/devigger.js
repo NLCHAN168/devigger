@@ -50,7 +50,12 @@ async function devig(response, evarray, evthreshold) {
     }
   }
 }
-
+/**
+ *
+ * @param {import("./datagolf.js").DatagolfResponse} response
+ * @param {Array} evarray
+ * @param {number} evthreshold
+ */
 async function devigKFT(response, evarray, evthreshold) {
   for (let golfer of response.odds) {
     golfer.event_name = response.event_name;
@@ -132,7 +137,8 @@ async function devigKFT(response, evarray, evthreshold) {
 /**
  *
  * @param {import("./datagolf.js").ThreeballResponse} response
- * @param {*} evarray
+ * @param {Array} evarray
+ * @param {number} evthreshold
  */
 async function devig3ball(response, evarray, evthreshold) {
   // console.log(response);
@@ -249,5 +255,90 @@ async function devig3ball(response, evarray, evthreshold) {
 }
 
 //TODO: finish matchup devig function
-async function devigMU(response, evarray, evthreshold) {}
+/**
+ *
+ * @param {import("./d.js").MatchUpResponse} response
+ * @param {Array} evarray
+ * @param {number} evthreshold
+ */
+async function devigMU(response, evarray, evthreshold) {
+  if (Array.isArray(response.match_list)) {
+    let books = ["betmgm", "fanduel", "draftkings"];
+    for (let i = 0; i < response.match_list.length; i++) {
+      for (let key in response.match_list[i].odds) {
+        if (books.includes(key)) {
+          let matchup = response.match_list[i];
+          console.log(key + " in " + response.match_list[i].odds);
+          let list = [
+            "LegOdds",
+            response.match_list[i].odds.datagolf.p1,
+            "FinalOdds",
+            response.match_list[i].odds[key].p1,
+          ];
+          let queryString =
+            baseUrl +
+            generateDeviggerUrl(arrayToObjectBuilder(...list)) +
+            endUrl;
+          await fetch(queryString)
+            .then((res) => res.json())
+            .then((data) => {
+              console.log(data);
+              matchup.devig = data;
+              if (matchup.devig.Final.EV_Percentage > evthreshold) {
+                matchup.event_name = response.event_name;
+                if (response.hasOwnProperty("round_num")) {
+                  matchup.round_num = response.round_num;
+                }
+                matchup.market =
+                  response.match_list[i].p1_player_name +
+                  " > " +
+                  response.match_list[i].p2_player_name +
+                  " " +
+                  key +
+                  " " +
+                  response.match_list[i].odds[key].p1;
+                matchup.lastUpdate = response.last_updated;
+                evarray.push(matchup);
+              }
+            })
+            .then(async () => {
+              let list = [
+                "LegOdds",
+                response.match_list[i].odds.datagolf.p2,
+                "FinalOdds",
+                response.match_list[i].odds[key].p2,
+              ];
+              let queryString =
+                baseUrl +
+                generateDeviggerUrl(arrayToObjectBuilder(...list)) +
+                endUrl;
+              await fetch(queryString)
+                .then((res) => res.json())
+                .then((data) => {
+                  console.log(data);
+                  matchup.devig = data;
+                  if (matchup.devig.Final.EV_Percentage > evthreshold) {
+                    matchup.event_name = response.event_name;
+                    if (response.hasOwnProperty("round_num")) {
+                      matchup.round_num = response.round_num;
+                    }
+                    matchup.market =
+                      response.match_list[i].p2_player_name +
+                      " > " +
+                      response.match_list[i].p1_player_name +
+                      " " +
+                      key +
+                      " " +
+                      response.match_list[i].odds[key].p2;
+                    matchup.lastUpdate = response.last_updated;
+                    evarray.push(matchup);
+                  }
+                });
+            });
+        }
+      }
+    }
+  }
+}
+
 export { devig, devigKFT, devig3ball, devigMU };

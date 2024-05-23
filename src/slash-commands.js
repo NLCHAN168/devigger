@@ -95,14 +95,27 @@ const slashRegister = async () => {
           .addStringOption((option) =>
             option
               .setName("tour")
-              .setDescription("tour name - pga, euro, opp, alt")
+              .setDescription("Tournament")
               .setRequired(true)
+              .addChoices(
+                { name: "PGA", value: "pga" },
+                { name: "Euro", value: "euro" },
+                { name: "KFT", value: "kft" },
+                { name: "Alt", value: "liv" }
+              )
           )
           .addStringOption((option) =>
             option
               .setName("market")
               .setDescription("tournament_matchups, round_matchups")
               .setRequired(true)
+              .addChoices(
+                {
+                  name: "Tournament Matchups (72 Hole)",
+                  value: "tournament_matchups",
+                },
+                { name: "Round Matchups", value: "round_matchups" }
+              )
           )
           .addNumberOption((option) =>
             option.setName("ev").setDescription("EV Percentage in decimal")

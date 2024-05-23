@@ -91,6 +91,7 @@ export interface MatchUpResponse {
 	last_updated: string;
 	market: string;
 	match_list?: string | MatchupEntry[] | MatchupTieEntry[] ;
+	round_num?: number;
 }
 
 export interface ThreeballResponse {
