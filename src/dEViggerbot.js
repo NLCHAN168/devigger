@@ -223,7 +223,7 @@ client.on("interactionCreate", async (interaction) => {
           if (evarray[i].hasOwnProperty("fanduel")) {
             embed.addFields(
               {
-                value:
+                name:
                   evarray[i].player_name +
                   " " +
                   evarray[i].market +
