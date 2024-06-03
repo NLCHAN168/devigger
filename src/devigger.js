@@ -48,6 +48,44 @@ async function devig(response, evarray, evthreshold) {
           }
         });
     }
+    if (
+      golfer.hasOwnProperty("draftkings") &&
+      !golfer.hasOwnProperty("fanduel") &&
+      golfer.datagolf.baseline_history_fit !== null
+    ) {
+      let list = [
+        "LegOdds",
+        golfer.datagolf.baseline_history_fit,
+        "FinalOdds",
+        golfer.draftkings,
+      ];
+      let queryString =
+        baseUrl + generateDeviggerUrl(arrayToObjectBuilder(...list)) + endUrl;
+      await fetch(queryString)
+        .then((res) => res.json())
+        .then((data) => {
+          console.log(data);
+          golfer.devig = data;
+          golfer.event_name = response.event_name;
+          golfer.market = response.market;
+          golfer.lastUpdate = response.last_updated;
+          //assess EV, if above threshold, push to evarray
+          if (
+            golfer.devig.Final.EV_Percentage > evthreshold &&
+            golfer.pinged !== true
+          ) {
+            evarray.push(golfer);
+            golfer.pinged = true;
+            console.log("EV: " + golfer.devig.Final.EV_Percentage);
+            console.log("finalodds for fd: " + golfer.draftkings);
+          }
+          //if fair value odds is positive, add "+" to value
+          if (golfer.devig.Final.FairValue_Odds > 0) {
+            golfer.devig.Final.FairValue_Odds =
+              "+" + golfer.devig.Final.FairValue_Odds;
+          }
+        });
+    }
   }
 }
 /**
