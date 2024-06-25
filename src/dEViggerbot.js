@@ -201,7 +201,7 @@ client.on("interactionCreate", async (interaction) => {
       let embed;
       const tour = interaction.options.getString("tour");
       const market = interaction.options.getString("market");
-      let evthreshold = 0.1;
+      let evthreshold = 0.15;
       if (Number.isFinite(interaction.options.getNumber("ev"))) {
         evthreshold = interaction.options.getNumber("ev");
       }
